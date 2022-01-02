@@ -6,6 +6,8 @@ enableRobotsTXT = true
 defaultContentLanguage = "en"
 summaryLength = 25
 
+disableKinds = [ "RSS", "sitemap" ]
+
 [params]
   mainSections = ["post","docs"]
   # Footnotes and TableOfContents don't work properly with a base href set in <head>
@@ -72,6 +74,7 @@ summaryLength = 25
     disabled = true
 
 [module]
+  replacements = "github.com/danielfdickinson/metadata-mod-hugo-dfd -> ../.."
   [[module.imports]]
     path = "github.com/danielfdickinson/metadata-mod-hugo-dfd"
 
@@ -106,4 +109,4 @@ summaryLength = 25
   [[module.imports]]
     ignoreConfig = true
     ignoreMounts = true
-    path = "github.com/danielfdickinson/minimal-theme-hugo-dfd"
+    path = "github.com/danielfdickinson/minimal-test-theme-hugo-dfd"

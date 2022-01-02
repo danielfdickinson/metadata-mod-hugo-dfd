@@ -1,3 +1,3 @@
-module github.com/danielfdickinson/hmetadata-mod-hugo-dfd
+module github.com/danielfdickinson/metadata-mod-hugo-dfd
 
 go 1.17
