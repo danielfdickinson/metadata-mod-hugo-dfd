@@ -8,7 +8,7 @@ weight: 20
 
 ## Statement
 
-[Daniel F. Dickinson](https://www.danielfdickinson.ca/about) makes his best effort to keep this site accessible and inclusive. If you find something that does not meet that goal, please use the [contact form on his main site](https://www.danielfdickinson.ca/accessibility#contact-form) to let him know.
+[Daniel F. Dickinson](https://www.wildtechgarden.ca/about/) makes his best effort to keep this site accessible and inclusive. If you find something that does not meet that goal, please use the [contact form on his main site](https://www.wildtechgarden.ca/contact/) to let him know.
 
 ## Goals
 
@@ -20,6 +20,6 @@ A more difficult challenge is to use language that is less complex, while saying
 
 ## Navigation Notes
 
-[We never open links in new tabs, use "Open link in new tab" if you want that](https://www.danielfdickinson.ca/post/accessible-design-no-blank/). ([#dontbreakthebackbutton](https://www.linkedin.com/feed/hashtag/?keywords=dontbreakthebackbutton))
+[We never open links in new tabs, use "Open link in new tab" if you want that](https://www.wildtechgarden.ca/blog/accessible-design-no-blank/). ([#dontbreakthebackbutton](https://www.linkedin.com/feed/hashtag/?keywords=dontbreakthebackbutton))
 
 [^1]: For example: 'alt' tags often contain information that would be of interest to a sighted user if written well, and by the same token are often not written well because of the 'out of site, out of mind' effect. As such, good captions create a better experience for all compared to 'alt' tags.
