@@ -4,7 +4,7 @@ DFD Hugo Module for Handling Metadata for Pages
 
 ## Status
 
-TBD
+![build-and-verify](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/actions/workflows/build-and-verify.yml/badge.svg)
 
 ## Features
 
