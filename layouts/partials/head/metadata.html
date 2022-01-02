@@ -1,11 +1,10 @@
-{{- hugo.Generator }}
-{{- $metadataGathered := partial "helpers/return-metadata" (
-    dict "page" .Page 
-    "requestedData" (slice "description" "keywords")
-) -}}
+{{- /* Use of .Page.Params and .Page.Site.Params keeps the partial 'shortcode safe' */ -}}
+{{- $self_close := eq ( .Page.Params.emptyElementStyle | default .Page.Site.Params.emptyElementStyle ) "self-closing" -}}
+{{- if $self_close -}}{{- hugo.Generator }}{{- else -}}{{- replace hugo.Generator " /" "" | safeHTML }}{{- end }}
+{{- $metadataGathered := partial "helpers/return-metadata" ( dict "page" .Page "requestedData" (slice "description" "keywords") ) -}}
 {{- with $metadataGathered.description }}
-<meta name="description" content="{{ . }}" />
+    <meta name="description" content="{{ . }}"{{ if $self_close }} /{{ end }}>
 {{- end -}}
 {{- with $metadataGathered.keywords }}
-<meta name="keywords" content="{{ delimit $metadataGathered.keywords ","}}" />
+    <meta name="keywords" content="{{ delimit $metadataGathered.keywords ","}}"{{ if $self_close }} /{{ end }}>
 {{- end -}}
