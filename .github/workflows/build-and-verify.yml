@@ -44,6 +44,6 @@ jobs:
         uses: danielfdickinson/link-check-action-hugo-dfd@v0.1.1
         with:
           canonical-root: https://example.com/
-          entrypoint: index.html
+          entry-point: index.html
           upload-logs-as: check-links-failure
           upload-logs-retention: 3
