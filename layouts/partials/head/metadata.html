@@ -1,0 +1,11 @@
+{{- hugo.Generator }}
+{{- $metadataGathered := partial "helpers/return-metadata" (
+    dict "page" .Page 
+    "requestedData" (slice "description" "keywords")
+) -}}
+{{- with $metadataGathered.description }}
+<meta name="description" content="{{ . }}" />
+{{- end -}}
+{{- with $metadataGathered.keywords }}
+<meta name="keywords" content="{{ delimit $metadataGathered.keywords ","}}" />
+{{- end -}}

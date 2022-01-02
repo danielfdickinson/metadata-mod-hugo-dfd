@@ -1,0 +1,15 @@
+{{- $keywords := (slice) -}}
+{{- if .IsPage -}}
+    {{- range $plural, $terms := .Site.Taxonomies -}}
+        {{- range $taxonomy_page_terms := ($.Param $plural) -}}
+            {{- $keywords = $keywords | append $taxonomy_page_terms -}}
+        {{- end -}}
+    {{- end -}}
+{{- else -}}
+    {{- range $plural, $terms := .Site.Taxonomies -}}
+        {{- range $term, $val := $terms -}}
+            {{- $keywords = $keywords | append $term -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- return $keywords -}}

@@ -1,0 +1,36 @@
+{{- $ctx := . -}}
+{{- $curPage := .page -}}
+{{- $requestedData := .requestedData -}}
+
+{{- $dataScratch := newScratch -}}
+{{- $allData := (
+    slice 
+    "audio"
+    "name"
+    "description"
+    "dateCreated"
+    "datePublished"
+    "dateModified"
+    "images"
+    "keywords"
+    "locale"
+    "section"
+    "see_also"
+    "siteName"
+    "type"
+    "url"
+    "videos"
+    "wordCount"
+) -}}
+
+{{- $dataToGather := $requestedData | default $allData -}}
+
+{{- range $dataToGather -}}
+    {{- $gatherType := . -}}
+    {{- with $curPage -}}
+        {{- $data := (partial (printf "helpers/lib/metadata/gather-%s" $gatherType) .) -}}
+        {{- $dataScratch.SetInMap "dataGathered" $gatherType $data -}}
+    {{- end -}}
+{{- end -}}
+{{- $dataGathered := $dataScratch.Get "dataGathered" -}}
+{{- return $dataGathered -}}

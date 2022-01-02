@@ -1,0 +1,18 @@
+<section class="metadata-gather-test-metadata-central">
+    <h2>{{ i18n "metadata_gather_test" }}</h2>
+    <ul>
+        {{- $dataGathered := (partial "helpers/return-metadata" (dict "page" .Page)) -}}
+        {{- range $key, $dataValue := $dataGathered }}
+            {{- if not $dataValue -}}
+                {{- $dataValue = "<i>(nil)</i>" | safeHTML -}}
+            {{- else if (and (not (reflect.IsMap $dataValue)) (not (reflect.IsSlice $dataValue))) -}}
+                {{- if hasPrefix $key "date" -}}
+                    {{- $dataValue = $dataValue.Local -}}
+                {{- end -}}
+            {{- else -}}
+                {{- $dataValue = printf "[%s]" (delimit $dataValue ", ") -}}
+            {{- end -}}
+            <li><b>{{ $key }}:</b> {{ $dataValue }}</li>
+        {{ end -}}
+    </ul>
+</section>

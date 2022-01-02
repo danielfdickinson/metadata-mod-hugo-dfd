@@ -1,0 +1,5 @@
+{{- $itemType := "website" -}}
+{{- if .IsPage -}}
+    {{- $itemType = "article" -}}
+{{- end -}}
+{{- return $itemType -}}

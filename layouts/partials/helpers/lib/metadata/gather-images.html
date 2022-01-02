@@ -1,0 +1,31 @@
+{{- /* TODO: Add generating images to use in metadata */ -}}
+{{- $images := (slice) -}}
+{{- with .Params.images -}}
+    {{- range first 6 . -}}
+        {{- $imageResource := resources.Get (index . 0) -}}
+        {{- with $imageResource -}}
+            {{- $images = $images | append .Permalink -}}
+        {{- else -}}
+            {{- $images = $images | append (index . 0 | absURL) -}}
+        {{- end -}}
+    {{- end -}}
+{{- else -}}
+    {{- $imageResources := .Resources.ByType "image" -}}
+    {{- $featured := $imageResources.GetMatch "*feature*" -}}
+    {{- if not $featured -}}
+        {{- $featured = $imageResources.GetMatch "{*cover*,*thumbnail*}" -}}
+    {{- end -}}
+    {{- with $featured -}}
+        {{- $images = $images | append .Permalink -}}
+    {{- else -}}
+        {{- with .Site.Params.images -}}
+            {{- $imageResource := resources.Get (index . 0) -}}
+            {{- with $imageResource -}}
+                {{- $images = $images | append .Permalink -}}
+            {{- else -}}
+                {{- $images = $images | append (index . 0 | absURL) -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- return $images -}}
