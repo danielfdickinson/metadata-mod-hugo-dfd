@@ -41,8 +41,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: "Check internal links"
-        uses: danielfdickinson/link-check-action-hugo-dfd@v0.1.0
+        uses: danielfdickinson/link-check-action-hugo-dfd@v0.1.1
         with:
           canonical-root: https://example.com/
+          entrypoint: index.html
           upload-logs-as: check-links-failure
           upload-logs-retention: 3
