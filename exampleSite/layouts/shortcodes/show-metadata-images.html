@@ -1,0 +1,7 @@
+{{- with (partial "helpers/return-metadata" (dict "page" .Page "requestedData" (slice "images"))) -}}
+    {{- range .images -}}
+    <div class="metadata-image">
+        <img src="{{ . }}">
+    </div>
+    {{- end -}}
+{{- end -}}

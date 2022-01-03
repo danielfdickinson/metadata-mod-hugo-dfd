@@ -1,16 +1,12 @@
-{{- /* TODO: Add generating images to use in metadata */ -}}
+{{- /* NOTE: This is overridden when using the responsive images module from DFDs collection */ -}}
+{{- $curPage := . -}}
 {{- $images := (slice) -}}
 {{- with .Params.images -}}
     {{- range first 6 . -}}
-        {{- $imageResource := resources.Get (index . 0) -}}
-        {{- with $imageResource -}}
-            {{- $images = $images | append .Permalink -}}
-        {{- else -}}
-            {{- $images = $images | append (index . 0 | absURL) -}}
-        {{- end -}}
+        {{- $images = partial "helpers/lib/image-handling/findimagesrc" (dict "imageName" . "images" $images "page" $curPage "getRelative" false "ignoreBundleAssets" false) -}}
     {{- end -}}
 {{- else -}}
-    {{- $imageResources := .Resources.ByType "image" -}}
+    {{- $imageResources := $curPage.Resources.ByType "image" -}}
     {{- $featured := $imageResources.GetMatch "*feature*" -}}
     {{- if not $featured -}}
         {{- $featured = $imageResources.GetMatch "{*cover*,*thumbnail*}" -}}
@@ -18,13 +14,8 @@
     {{- with $featured -}}
         {{- $images = $images | append .Permalink -}}
     {{- else -}}
-        {{- with .Site.Params.images -}}
-            {{- $imageResource := resources.Get (index . 0) -}}
-            {{- with $imageResource -}}
-                {{- $images = $images | append .Permalink -}}
-            {{- else -}}
-                {{- $images = $images | append (index . 0 | absURL) -}}
-            {{- end -}}
+        {{- with $curPage.Site.Params.images -}}
+            {{- $images = partial "helpers/lib/image-handling/findimagesrc" (dict "imageName" (index . 0) "images" $images "page" $curPage "getRelative" false "ignoreBundleAssets" true) -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
