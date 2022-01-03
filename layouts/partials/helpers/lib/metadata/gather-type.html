@@ -1,5 +1,11 @@
-{{- $itemType := "website" -}}
-{{- if .IsPage -}}
-    {{- $itemType = "article" -}}
+{{- /* OpenGraph type ('og:type'): see https://ogp.me/#types */ -}}
+{{- $itemType := "article" -}}
+{{- if .IsHome -}}
+    {{- $itemType = "website" -}}
+{{- else if .PublishDate.IsZero -}}
+    {{- $itemType = "website" -}}
+{{- end -}}
+{{- if .Params.openGraphType -}}
+    {{- $itemType = .Params.openGraphType -}}
 {{- end -}}
 {{- return $itemType -}}

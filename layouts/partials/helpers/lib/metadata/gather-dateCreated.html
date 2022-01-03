@@ -1,1 +1,5 @@
-{{- return .Date.UTC -}}
+{{- $date := .Date.UTC -}}
+{{- if (eq (.Params.datesPreserveTimezone | default .Site.Params.datesPreserveTimezone) true) -}}
+    {{- $date = .Date -}}
+{{- end -}}
+{{- return $date -}}

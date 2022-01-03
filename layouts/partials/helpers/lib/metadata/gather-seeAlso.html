@@ -1,8 +1,8 @@
-{{- /* If it is part of a series, link to related articles */}}
+{{- /* If it is part of a series, link to related articles */ -}}
 {{- $seeAlso := (slice) -}}
-{{- $permalink := .Permalink }}
-{{- $siteSeries := .Site.Taxonomies.series }}
-{{ with .Params.series }}
+{{- $permalink := .Permalink -}}
+{{- $siteSeries := .Site.Taxonomies.series -}}
+{{- with .Params.series -}}
     {{- range $name := . -}}
         {{- $series := index $siteSeries ($name | urlize) -}}
         {{- range $page := first 6 $series.Pages -}}
