@@ -4,6 +4,10 @@ author: Daniel F. Dickinson
 date: 2021-10-15T05:57:11Z
 publishDate: 2021-10-15T05:57:11Z
 weight: 20
+description: "Accessibility statement for test site for DFD Hugo Metadata Module"
+summary: "[Daniel F. Dickinson](https://www.wildtechgarden.ca/about/) makes his best effort to keep this site accessible and inclusive. If you find something that does not meet that goal, please use the [contact form on his main site](https://www.wildtechgarden.ca/contact/) to let him know."
+summaryRenderMarkdown: true
+summaryPreserveHtml: true
 ---
 
 ## Statement

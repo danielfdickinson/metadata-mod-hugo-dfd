@@ -1,5 +1,4 @@
-{{- /* Use of .Page.Params and .Page.Site.Params keeps the partial 'shortcode safe' */ -}}
-{{- $self_close := eq ( .Page.Params.emptyElementStyle | default .Page.Site.Params.emptyElementStyle ) "self-closing" -}}
+{{- $self_close := eq ( .Params.emptyElementStyle | default .Site.Params.emptyElementStyle ) "self-closing" -}}
 {{- if $self_close -}}{{- hugo.Generator }}{{- else -}}{{- replace hugo.Generator " /" "" | safeHTML }}{{- end }}
 {{- $metadataGathered := partial "helpers/return-metadata" ( dict "page" .Page "requestedData" (slice "description" "keywords") ) -}}
 {{- with $metadataGathered.description }}

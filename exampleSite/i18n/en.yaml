@@ -1,8 +1,5 @@
-- id: untitled
-  translation: Untitled
-
-- id: untitled_site
-  translation: Untitled Site
-
-- id: metadata_gather_test
+- id: metadataGatherTest
   translation: Metadata Gather Test
+
+- id: metadataForHeadElementTest
+  translation: Test of Metadata for <head>

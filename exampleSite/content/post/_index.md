@@ -1,0 +1,1 @@
+Demo of section with no frontmatter, and having content (type should include both section and article in the list). 
