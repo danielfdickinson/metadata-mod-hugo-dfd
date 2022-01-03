@@ -5,7 +5,6 @@ enableGitInfo = true
 enableRobotsTXT = true
 defaultContentLanguage = "en"
 summaryLength = 25
-
 disableKinds = [ "RSS", "sitemap" ]
 
 [params]
@@ -13,13 +12,21 @@ disableKinds = [ "RSS", "sitemap" ]
   # Footnotes and TableOfContents don't work properly with a base href set in <head>
   useBaseURL = false
 
+[taxonomies]
+  tag = "tags"
+
+[frontmatter]
+  publishDate = ["publishDate","date",":git","lastmod",":fileModTime"]
+  lastmod = ["lastmod",":git",":fileModTime","date","publishDate"]
+  date = ["date","publishDate","lastmod",":git",":fileModTime"]
+
 # See https://gohugo.io/content-management/multilingual/
 # and https://www.regisphilibert.com/blog/2018/08/hugo-multilingual-part-1-managing-content-translation/
 [languages]
   [languages.en]
     languageName = ":en:"
     languageAltTitle = "English"
-    title = "metadata-mod-hugo-dfd"
+    title = "DFD Hugo Metadata Module"
     description = "DFD Hugo Module for Handling Metadata for Pages"
     weight = 1
     
@@ -45,14 +52,6 @@ disableKinds = [ "RSS", "sitemap" ]
     name = "Daniel F. Dickinson"
     homepage = "https://www.wildtechgarden.ca/about/"
     email = "dfdpublic@wildtechgarden.ca"
-
-[taxonomies]
-  tag = "tags"
-
-[frontmatter]
-  lastmod = ["lastmod",":git",":fileModTime","date","publishDate"]
-  date = ["date","publishDate","lastmod",":git",":fileModTime"]
-  publishDate = ["publishDate","date","lastmod",":git",":fileModTime"]
 
 [markup]
   [markup.highlight]

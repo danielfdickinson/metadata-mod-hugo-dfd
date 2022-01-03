@@ -1,8 +1,11 @@
 {{- $description := .Description -}}
-{{- if .IsPage -}}
-    {{- $description = ($description | default .Params.description | default .Params.summary | default .Summary) -}}
+{{- if not .IsHome -}}
+    {{- $description = ($description | default .Params.description | default (partial "helpers/lib/metadata/gather-summary" .)) -}}
+    {{- /* For the found description: Turn into plain text, replace newlines and carriage-returns with spaces, and condense any multiple space sequence to a single space */ -}}
+    {{- $description = replaceRE " +" " " (replaceRE "(\n|\r)" " " ($description | plainify)) -}}
 {{- else -}}
-    {{- $description = ($description | default .Site.Params.description | default .Site.Params.summary) -}}
+    {{- $description = ($description | default .Params.description | default .Site.Params.description | default .Site.Params.summary) -}}
+    {{- /* For the found description: Render markdown if present, turn into plain text, replace newlines and carriage-returns with spaces, then condense any multiple space sequence to a single space */ -}}
+    {{- $description = replaceRE " +" " " (replaceRE "(\n|\r)" " " ($description | .RenderString | plainify)) -}}
 {{- end -}}
-{{- $description = replaceRE " +" " " (replaceRE "(\n|\r)" " " ($description | .RenderString | plainify)) -}}
 {{- return $description -}}

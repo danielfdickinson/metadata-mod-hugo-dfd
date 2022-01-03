@@ -1,6 +1,5 @@
 {{- $ctx := . -}}
 {{- $foundTitle := i18n "untitled" -}}
-{{- $siteTitle := i18n "untitled_site" -}}
 {{- /* By using with page context we are able to use this partial inside shortcodes as well */ -}}
 {{- /* We find the page title, using the following order of preference:
          a given page title > (if home page, the site title ) > (munged) title based on base filename > (translated) 'Untitled'
@@ -9,12 +8,16 @@
     {{- if .Title -}}
         {{- $foundTitle = .Title -}}
     {{- else if eq .Kind "home" -}}
-        {{- if .Site.Title }}
-            {{- $foundTitle = .Site.Title -}}
+        {{ with (partial "gather-siteName" .) -}}
+            {{- $foundTitle = . -}}
         {{- end -}}
     {{- else if .File -}}
-        {{- if .File.TranslationBaseName -}}
-            {{ $foundTitle = .File.TranslationBaseName | humanize | title -}}
+        {{- if .File.ContentBaseName -}}
+            {{- if .IsSection -}}
+                {{- $foundTitle = .File.ContentBaseName | humanize | pluralize | title -}}
+            {{- else -}}
+                {{- $foundTitle = .File.ContentBaseName | humanize | title -}}
+            {{- end -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
