@@ -1,14 +1,8 @@
-{{- $ctx := . -}}
-{{- $foundTitle := i18n "untitled" -}}
-{{- /* By using with page context we are able to use this partial inside shortcodes as well */ -}}
-{{- /* We find the page title, using the following order of preference:
-         a given page title > (if home page, the site title ) > (munged) title based on base filename > (translated) 'Untitled'
-    */ -}}
-{{- with $ctx -}}
-    {{- if .Title -}}
-        {{- $foundTitle = .Title -}}
-    {{- else if eq .Kind "home" -}}
-        {{ with (partial "gather-siteName" .) -}}
+{{- $titleFromContent := false -}}
+{{- $foundTitle := partial "helpers/lib/metadata/baseFindName" . -}}
+{{- if not $foundTitle -}}
+    {{- if .IsHome -}}
+        {{ with (partial "helpers/lib/metadata/gather-siteName" .) -}}
             {{- $foundTitle = . -}}
         {{- end -}}
     {{- else if .File -}}
@@ -18,6 +12,24 @@
             {{- else -}}
                 {{- $foundTitle = .File.ContentBaseName | humanize | title -}}
             {{- end -}}
+        {{- end -}}
+    {{- else -}}
+        {{- $foundTitle = i18n "untitled" -}}
+    {{- end -}}
+{{- end -}}
+{{- if $foundTitle -}}
+    {{- $multipleH1 := false -}}
+    {{- if not $titleFromContent -}}
+        {{- /* Only allowed one h1 per page */ -}}
+        {{- $multipleH1 = gt (len (findRE "<h1.*?>(.|\n)*?</h1>" .Content)) 0 -}}
+    {{- else -}}
+        {{- $multipleH1 = gt (len (findRE "<h1.*?>(.|\n)*?</h1>" .Content)) 1 -}}
+    {{- end -}}
+    {{- if eq (.Params.fixMultipleH1Error | default .Site.Params.fixMultipleH1Error) false -}}
+        {{- if eq (.Params.warnMultipleH1Error | default .Site.Params.warnMultipleH1Error) true -}}
+            {{- warnf "More than one H1 element (title + from content). This is against recommended best practises: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#multiple_h1_elements_on_one_page" -}}
+        {{- else if ne (.Params.ignoreMultipleH1Error | default .Site.Params.ignoreMultipleH1Error) true -}}
+            {{- errorf "More than one H1 element (title + from content). This is against recommended best practises: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#multiple_h1_elements_on_one_page" -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}

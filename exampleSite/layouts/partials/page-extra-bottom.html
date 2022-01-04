@@ -1,15 +1,15 @@
 {{- $curPage := .Page }}
 <section class="metadata-gather-test-metadata-central">
     <h2>{{ i18n "metadataGatherTest" }}</h2>
-    <p>Key names are OpenGraph names when applicable (e.g. the page title is labelled here as 'name' because that is what OpenGraph uses)</p>
+    <p>Key names are Open Graph names when applicable (e.g. the page title is labelled here as 'name' because that is what Open Graph uses)</p>
     <ul>
         {{- $dataGathered := (partial "helpers/return-metadata" (dict "page" $curPage)) -}}
-        {{- range $key, $dataValue := $dataGathered }}
+        {{- range $key, $dataValue := $dataGathered -}}
             {{- if not $dataValue -}}
                 {{- $dataValue = "<i>(nil)</i>" | safeHTML -}}
             {{- else if (or (reflect.IsMap $dataValue) (reflect.IsSlice $dataValue)) -}}
                 {{- $dataValue = printf "[%s]" (delimit $dataValue ", ") -}}
-            {{- end -}}
+            {{- end }}
             <li><b>{{ $key }}:</b> {{ $dataValue }}</li>
         {{- end }}
     </ul>

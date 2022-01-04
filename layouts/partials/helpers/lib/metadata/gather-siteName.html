@@ -1,1 +1,12 @@
-{{- return (.Site.Title | default .Site.Params.title | default (i18n "untitledSite")) -}}
+{{- $foundTitle := "" -}}
+{{- if .Site.Title -}}
+    {{- $foundTitle = .Site.Title -}}
+{{- else if .Site.Params.Title -}}
+    {{- $foundTitle = .Site.Params.Title -}}
+{{- else -}}
+    {{- $foundTitle = partial "helpers/lib/metadata/baseFindName" .Site.Home.Page -}}
+{{- end -}}
+{{- if not $foundTitle -}}
+    {{- $foundTitle = i18n "untitledSite" -}}
+{{- end -}}
+{{- return $foundTitle -}}
