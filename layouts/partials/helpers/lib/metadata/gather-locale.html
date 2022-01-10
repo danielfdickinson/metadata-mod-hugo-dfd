@@ -1,1 +1,2 @@
-{{- return (.Params.locale | default .Site.Params.locale | default .Site.Language.Lang) -}}
+{{- $langCode := .Params.locale | default .Site.Params.locale | default .Site.LanguageCode | default .Site.Language.Lang -}}
+{{- return ($langCode | lower) -}}

@@ -1,0 +1,12 @@
+{{- $ctx := . -}}
+{{- $curPage := .page -}}
+{{- $openGraphMap := .openGraphMap -}}
+{{- $openGraphMediaType := .openGraphMediaType -}}
+{{- $openGraphProperties := .openGraphProperties -}}
+{{- $self_close := eq ( .Params.emptyElementStyle | default .Site.Params.emptyElementStyle ) "self-closing" }}
+    <meta property="{{ printf "og:%s" $openGraphMediaType }}" content="{{ index $openGraphMap "url" }}"{{ if $self_close }} /{{ end }}>
+{{- range $openGraphProperties -}}
+    {{- if (index $openGraphMap .) }}
+    <meta property="{{ printf "og:%s:%s" $openGraphMediaType . }}" content="{{ index $openGraphMap . }}"{{ if $self_close }} /{{ end }}>
+    {{- end -}}
+{{- end -}}

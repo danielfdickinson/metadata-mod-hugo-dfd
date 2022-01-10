@@ -1,0 +1,21 @@
+{{- $ctx := . -}}
+{{- $curPage := .page -}}
+{{- $metadataGathered := .metadataGathered -}}
+{{- $self_close := eq ( .Params.emptyElementStyle | default .Site.Params.emptyElementStyle ) "self-closing" -}}
+{{- if (.Params.microformatsTwitterCardEnable | default .Site.Params.microformatsTwitterCardEnable | default true) -}}
+    {{- with index $metadataGathered "media-image" -}}
+    <meta name="twitter:card" content="summary_large_image"{{ if $self_close }} /{{ end }}>
+        {{- if reflect.IsMap . }}
+    <meta name="twitter:image" content="{{ (.secure_url | default .link) | absURL }}"{{ if $self_close }} /{{ end }}>
+        {{- else }}
+    <meta name="twitter:image" content="{{ . | absURL }}"{{ if $self_close }} /{{ end }}>
+        {{- end -}}
+    {{- else }}
+    <meta name="twitter:card" content="summary"{{ if $self_close }} /{{ end }}>
+    {{- end }}
+    <meta name="twitter:title" content="{{ index $metadataGathered "title-page" }}"{{ if $self_close }} /{{ end }}>
+    <meta name="twitter:description" content="{{ $metadataGathered.description }}"{{ if $self_close }} /{{ end }}>
+    {{- with .Site.Social.twitter }}
+    <meta name="twitter:site" content="@{{ . }}"{{ if $self_close }} /{{ end }}>
+    {{- end -}}
+{{- end -}}

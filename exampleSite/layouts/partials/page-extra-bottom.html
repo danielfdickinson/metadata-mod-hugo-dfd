@@ -1,18 +1,35 @@
 {{- $curPage := .Page }}
-<section class="metadata-gather-test-metadata-central">
-    <h2>{{ i18n "metadataGatherTest" }}</h2>
-    <p>Key names are Open Graph names when applicable (e.g. the page title is labelled here as 'name' because that is what Open Graph uses)</p>
-    <ul>
+    <section class="metadata-gather-test-metadata-central">
+        <h2>{{ i18n "metadataGatherTest" }}</h2>
+        <ul>
         {{- $dataGathered := (partial "helpers/return-metadata" (dict "page" $curPage)) -}}
         {{- range $key, $dataValue := $dataGathered -}}
-            {{- if not $dataValue -}}
+            {{- if and (not $dataValue) (not (reflect.IsSlice $dataValue)) -}}
                 {{- $dataValue = "<i>(nil)</i>" | safeHTML -}}
-            {{- else if (or (reflect.IsMap $dataValue) (reflect.IsSlice $dataValue)) -}}
-                {{- $dataValue = printf "[%s]" (delimit $dataValue ", ") -}}
+            {{- else if reflect.IsSlice $dataValue -}}
+                {{ $dataSlice := (slice) }}
+                {{- range $dataValue -}}
+                    {{- if reflect.IsMap . -}}
+                        {{- $displayValue := (slice) -}}
+                        {{- range $dataKey, $innerValue := . -}}
+                            {{- $displayValue = $displayValue | append (printf "\"%s\": \"%s\"" $dataKey ($innerValue | string)) -}}
+                        {{- end -}}
+                        {{- $dataSlice = $dataSlice | append (printf "{ %s }" (delimit $displayValue ", ")) -}}
+                    {{- else -}}
+                        {{- $dataSlice = $dataSlice | append . -}}
+                    {{- end -}}
+                {{- end -}}
+                {{- $dataValue = printf "[%s]" (delimit $dataSlice ", ") -}}
+            {{- else if reflect.IsMap $dataValue -}}
+                {{- $displayValue := (slice) -}}
+                {{- range $dataKey, $innerValue := . -}}
+                    {{- $displayValue = $displayValue | append (printf "\"%s\": \"%s\"" $dataKey ($innerValue | string)) -}}
+                {{- end -}}
+                {{- $dataValue = printf "{ %s }" (delimit $displayValue ", ") -}}
             {{- end }}
             <li><b>{{ $key }}:</b> {{ $dataValue }}</li>
         {{- end }}
-    </ul>
-    <h2>{{ i18n "metadataForHeadElementTest" }}</h2>
-    <pre><code>    {{ partial "head/metadata" . | htmlEscape | safeHTML }}</code></pre>
-</section>
+        </ul>
+        <h2>{{ i18n "metadataForHeadElementTest" }}</h2>
+        <pre><code>    {{ partial "head/metadata" . | htmlEscape | safeHTML -}}</code></pre>
+    </section>

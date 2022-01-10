@@ -1,0 +1,40 @@
+{{- $ctx := . -}}
+{{- $curPage := .page -}}
+{{- $metadataGathered := .metadataGathered -}}
+{{- $self_close := eq ( .Params.emptyElementStyle | default .Site.Params.emptyElementStyle ) "self-closing" -}}
+{{- if (.Params.microformatsSchemaEnable | default .Site.Params.microformatsSchemaEnable | default true) -}}
+    <meta itemprop="name" content="{{ index $metadataGathered "title-page" }}"{{ if $self_close }} /{{ end }}>
+    <meta itemprop="description" content="{{ $metadataGathered.description }}"{{ if $self_close }} /{{ end }}>
+    {{- if .IsPage -}}
+        {{- $iso8601 := "2006-01-02T15:04:05-07:00" -}}
+        {{- with (index $metadataGathered "date-created") }}
+    <meta itemprop="dateCreated" {{ .Format $iso8601 | printf "content=%q" | safeHTMLAttr }}{{ if $self_close }} /{{ end }}>
+        {{- end }}
+        {{- with (index $metadataGathered "date-published") }}
+    <meta itemprop="datePublished" {{ .Format $iso8601 | printf "content=%q" | safeHTMLAttr }}{{ if $self_close }} /{{ end }}>
+        {{- end -}}
+        {{- with (index $metadataGathered "date-modified") }}
+    <meta itemprop="dateModified" {{ .Format $iso8601 | printf "content=%q" | safeHTMLAttr }}{{ if $self_close }} /{{ end }}>
+        {{- end }}
+        {{- with (index $metadataGathered "date-expired") }}
+    <meta itemprop="dateExpired" {{ .Format $iso8601 | printf "content=%q" | safeHTMLAttr }}{{ if $self_close }} /{{ end }}>
+        {{- end }}
+    <meta itemprop="wordCount" content="{{ index $metadataGathered "word-count" }}"{{ if $self_close }} /{{ end }}>
+    {{- end -}}
+    {{- with index $metadataGathered "media-images" -}}
+        {{- if reflect.IsSlice . -}}
+            {{- range . -}}
+                {{- if reflect.IsMap . }}
+    <meta itemprop="image" content="{{ (.secure_url | default .link) | absURL }}"{{ if $self_close }} /{{ end }}>
+                {{- else }}
+    <meta itemprop="image" content="{{ . | absURL }}"{{ if $self_close }} /{{ end }}>
+                {{- end -}}
+            {{- end }}
+        {{- else if reflect.IsMap . -}}
+    <meta itemprop="image" content="{{ (.secure_url | default .link) | absURL }}"{{ if $self_close }} /{{ end }}>
+        {{- else }}
+    <meta itemprop="image" content="{{ . | absURL }}"{{ if $self_close }} /{{ end }}>
+        {{- end -}}
+    {{- end }}
+    <meta itemprop="keywords" content="{{ delimit $metadataGathered.keywords ","}}"{{ if $self_close }} /{{ end }}>
+{{- end -}}

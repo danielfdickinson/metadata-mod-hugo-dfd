@@ -1,0 +1,7 @@
+{{- $secUrl := .Permalink -}}
+{{- with urls.Parse $secUrl -}}
+    {{- if ne .Scheme "https" -}}
+        {{- $secUrl = "" -}}
+    {{- end -}}
+{{- end -}}
+{{- return $secUrl -}}

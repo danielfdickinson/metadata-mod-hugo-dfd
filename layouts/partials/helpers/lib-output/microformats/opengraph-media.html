@@ -1,0 +1,22 @@
+{{- $ctx := . -}}
+{{- $curPage := .page -}}
+{{- $mediaType := .mediaType -}}
+{{- $openGraphMediaType := .openGraphMediaType -}}
+{{- $metadataGathered := .metadataGathered -}}
+{{- $openGraphProperties := .openGraphProperties -}}
+{{- $self_close := eq ( .Params.emptyElementStyle | default .Site.Params.emptyElementStyle ) "self-closing" -}}
+{{- with (index $metadataGathered (printf "media-%s" $mediaType)) }}
+    {{- if reflect.IsMap . -}}
+        {{- partial "helpers/lib-output/microformats/opengraph-map" (dict "page" $curPage "openGraphMap" . "openGraphMediaType" $openGraphMediaType "openGraphProperties" $openGraphProperties) -}}
+    {{- else if reflect.IsSlice . -}}
+        {{- range . -}}
+            {{- if reflect.IsMap . -}}
+                {{- partial "helpers/lib-output/microformats/opengraph-map" (dict "page" $curPage "openGraphMap" . "openGraphMediaType" $openGraphMediaType "openGraphProperties" $openGraphProperties) -}}
+            {{- else }}
+    <meta property="{{ printf "og:%s" $openGraphMediaType }}" content="{{ . }}"{{ if $self_close }} /{{ end }}>
+            {{- end -}}
+        {{- end -}}
+    {{- else }}
+    <meta property="{{ printf "og:%s" $openGraphMediaType }}" content="{{ . }}"{{ if $self_close }} /{{ end }}>
+    {{- end -}}
+{{- end -}}

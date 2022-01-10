@@ -1,0 +1,13 @@
+{{- $curPage := . -}}
+{{- $locales := (slice) -}}
+{{- if .IsTranslated -}}
+    {{- range .Translations -}}
+        {{- with .LangCode -}}
+            {{- $locales = $locales | append . -}}
+        {{- end -}}
+    {{- end -}}
+{{- end }}
+{{- if eq (len $locales) 0 -}}
+    {{- $locales = $curPage.Scratch.Get "non-existent-scratch" -}}
+{{- end -}}
+{{- return $locales -}}

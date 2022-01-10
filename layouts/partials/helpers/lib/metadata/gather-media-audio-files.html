@@ -1,0 +1,59 @@
+{{- $curPage := . -}}
+{{- $audioFiles := (slice) -}}
+{{- $allFlat := true -}}
+{{- with .Params.audio -}}
+    {{- if reflect.IsMap . -}}
+        {{- $audioFile := . -}}
+        {{- $secUrl := partial "helpers/lib/metadata/gather-secure-url" (index . 0) -}}
+        {{- if $secUrl -}}
+            {{- $audioFile = . | merge (dict "secure_url" $secUrl) -}}
+        {{- end -}}
+        {{- $audioFiles = $audioFiles | append $audioFile -}}
+        {{- $allFlat = false -}}
+    {{- else if reflect.IsSlice . -}}
+        {{- range . -}}
+            {{- if reflect.IsMap . -}}
+                {{- $audioFile := . -}}
+                {{- $secUrl := partial "helpers/lib/metadata/gather-secure-url" (index . 0) -}}
+                {{- if $secUrl -}}
+                    {{- $audioFile = . | merge (dict "secure_url" $secUrl) -}}
+                {{- end -}}
+                {{- $audioFiles = $audioFiles | append $audioFile -}}
+                {{- $allFlat = false -}}
+            {{- else if reflect.IsSlice . -}}
+                {{- $audioFile := (dict "audio" (index . 0)) -}}
+                {{- $secUrl := partial "helpers/lib/metadata/gather-secure-url" (index . 0) -}}
+                {{- if $secUrl -}}
+                    {{- $audioFile = $audioFile | merge (dict "secure_url" $secUrl) -}}
+                {{- end -}}
+                {{- if isset . 1 -}}
+                    {{- $audioFile = $audioFile | merge (dict "type" (index . 1)) -}}
+                {{- end -}}
+                {{- $audioFiles = $audioFiles | append $audioFile -}}
+                {{- $allFlat = false -}}
+            {{- else -}}
+                {{- $audioFiles = $audioFiles | append . -}}
+            {{- end -}}
+        {{- end -}}
+    {{- else -}}
+        {{- $audioFiles = $audioFiles | append . -}}
+    {{- end -}}
+{{- end -}}
+{{- if $allFlat -}}
+    {{- if eq (len $audioFiles) 0 -}}
+        {{- $audioFiles = $curPage.Scratch.Get "non-existent-scratch" -}}
+    {{- else if eq (len $audioFiles) 1 -}}
+        {{- $audioFiles = (index $audioFiles 0) -}}
+    {{- else -}}
+        {{- $audioLinks := (slice) -}}
+        {{- range $audioFiles -}}
+            {{- if reflect.IsMap . -}}
+                {{- $audioLinks = $audioLinks | append .audio -}}
+            {{- else -}}
+                {{- $audioLinks = $audioLinks | append . -}}
+            {{- end -}}
+        {{- end -}}
+        {{- $audioFiles = $audioLinks -}}
+    {{- end -}}
+{{- end -}}
+{{- return $audioFiles -}}

@@ -7,3 +7,4 @@
 {{- with $metadataGathered.keywords }}
     <meta name="keywords" content="{{ delimit $metadataGathered.keywords ","}}"{{ if $self_close }} /{{ end }}>
 {{- end -}}
+{{- partial "head/microformats" . -}}

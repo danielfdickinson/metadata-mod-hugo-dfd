@@ -1,0 +1,6 @@
+{{- $curPage := . -}}
+{{- $audioFiles := partial "helpers/lib/metadata/gather-media-audio-files" $curPage -}}
+{{- if reflect.IsSlice $audioFiles -}}
+    {{- $audioFiles = index $audioFiles 0 -}}
+{{- end -}}
+{{- return $audioFiles -}}

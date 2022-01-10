@@ -1,0 +1,65 @@
+{{- $curPage := . -}}
+{{- $videos := (slice) -}}
+{{- $allFlat := true -}}
+{{- with .Params.video -}}
+    {{- if reflect.IsMap . -}}
+        {{- $video := . -}}
+        {{- $secUrl := partial "helpers/lib/metadata/gather-secure-url" (index . 0) -}}
+        {{- if $secUrl -}}
+            {{- $video = . | merge (dict "secure_url" $secUrl) -}}
+        {{- end -}}
+        {{- $videos = $videos | append $video -}}
+        {{- $allFlat = false -}}
+    {{- else if reflect.IsSlice . -}}
+        {{- range . -}}
+            {{- if reflect.IsMap . -}}
+                {{- $video := . -}}
+                {{- $secUrl := partial "helpers/lib/metadata/gather-secure-url" (index . 0) -}}
+                {{- if $secUrl -}}
+                    {{- $video = . | merge (dict "secure_url" $secUrl) -}}
+                {{- end -}}
+                {{- $videos = $videos | append $video -}}
+                {{- $allFlat = false -}}
+            {{- else if reflect.IsSlice . -}}
+               {{- $video := index . 0 -}}
+               {{- $secUrl := partial "helpers/lib/metadata/gather-secure-url" (index . 0) -}}
+                {{- if $secUrl -}}
+                    {{- $video = . | merge (dict "secure_url" $secUrl) -}}
+                {{- end -}}
+                {{- if isset . 1 -}}
+                    {{- $video = . | merge (dict "type" (index . 1)) -}}
+                {{- end -}}
+                {{- if isset . 1 -}}
+                    {{- $video = . | merge (dict "width" (index . 2)) -}}
+                {{- end -}}
+                {{- if isset . 1 -}}
+                    {{- $video = . | merge (dict "height" (index . 3)) -}}
+                {{- end -}}
+                {{- $videos = $videos | append $video -}}
+                {{- $allFlat = false -}}
+            {{- else -}}
+                {{- $videos = $videos | append . -}}
+            {{- end -}}
+        {{- end -}}
+    {{- else -}}
+        {{- $videos = $videos | append . -}}
+    {{- end -}}
+{{- end -}}
+{{- if $allFlat -}}
+    {{- if eq (len $videos) 0 -}}
+        {{- $videos = $curPage.Scratch.Get "non-existent-scratch" -}}
+    {{- else if eq (len $videos) 1 -}}
+        {{- $videos = (index $videos 0) -}}
+    {{- else -}}
+        {{- $videoLinks := (slice) -}}
+        {{- range $videos -}}
+            {{- if reflect.IsMap . -}}
+                {{- $videoLinks = $videoLinks | append .video -}}
+            {{- else -}}
+                {{- $videoLinks = $videoLinks | append . -}}
+            {{- end -}}
+        {{- end -}}
+        {{- $videos = $videoLinks -}}
+    {{- end -}}
+{{- end -}}
+{{- return $videos -}}

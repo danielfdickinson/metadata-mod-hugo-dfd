@@ -1,0 +1,55 @@
+{{- $ctx := . -}}
+{{- $curPage := .page -}}
+{{- $metadataGathered := .metadataGathered -}}
+{{- $self_close := eq ( .Params.emptyElementStyle | default .Site.Params.emptyElementStyle ) "self-closing" -}}
+{{- if (.Params.microformatsOpenGraphEnable | default .Site.Params.microformatsOpenGraphEnable | default true) }}
+    <meta property="og:title" content="{{ index $metadataGathered "title-page" }}"{{ if $self_close }} /{{ end }}>
+    <meta property="og:description" content="{{ $metadataGathered.description }}"{{ if $self_close }} /{{ end }}>
+    <meta property="og:type" content="{{ index $metadataGathered "opengraph-type" }}"{{ if $self_close }} /{{ end }}>
+    <meta property="og:url" content="{{ $metadataGathered.url }}"{{ if $self_close }} /{{ end }}>
+    {{- if index $metadataGathered "secure_url" -}}
+    <meta property="og:secure_url" content="{{ . }}"{{ if $self_close }} /{{ end }}>
+    {{- end -}}
+    {{- partial "helpers/lib-output/microformats/opengraph-media" (dict "page" . "openGraphMediaType" "image" "mediaType" "images" "metadataGathered" $metadataGathered "openGraphProperties" (slice "secure_url" "type" "width" "height" "alt")) -}}
+    {{- if eq (index $metadataGathered "opengraph-type") "article" -}}
+        {{- $iso8601 := "2006-01-02T15:04:05-07:00" }}
+        {{- with index $metadataGathered "date-created" }}
+    <meta property="article:created_time" {{ .Format $iso8601 | printf "content=%q" | safeHTMLAttr }}{{ if $self_close }} /{{ end }}>
+        {{- end -}}
+        {{- with index $metadataGathered "date-published" }}
+    <meta property="article:published_time" {{ .Format $iso8601 | printf "content=%q" | safeHTMLAttr }}{{ if $self_close }} /{{ end }}>
+        {{- end -}}
+        {{- with index $metadataGathered "date-modified" }}
+    <meta property="article:modified_time" {{ .Format $iso8601 | printf "content=%q" | safeHTMLAttr }}{{ if $self_close }} /{{ end }}>
+        {{- end -}}
+        {{- with index $metadataGathered "date-expired" }}
+    <meta property="article:expiration_time" {{ .Format $iso8601 | printf "content=%q" | safeHTMLAttr }}{{ if $self_close }} /{{ end }}>
+        {{- end -}}
+        {{- with $metadataGathered.section }}
+    <meta property="article:section" content="{{ . }}" />
+        {{- end -}}
+        {{- with $metadataGathered.tags -}}
+            {{- range . }}
+    <meta property="article:tag" content="{{ . }}" />
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+    {{- partial "helpers/lib-output/microformats/opengraph-media" (dict "page" . "openGraphMediaType" "audio" "mediaType" "audio-files" "metadataGathered" $metadataGathered "openGraphProperties" (slice "secure_url" "type")) -}}
+    {{- with $metadataGathered.locale }}
+    <meta property="og:locale" content="{{ . }}"{{ if $self_close }} /{{ end }}>
+    {{- end -}}
+    {{- with index $metadataGathered "locale-alternate" -}}
+        {{- range . }}
+    <meta property="og:locale:alternate" content="{{ . }}"{{ if $self_close }} /{{ end }}>
+        {{- end -}}
+    {{- end -}}
+    {{- with index $metadataGathered "title-site" }}
+    <meta property="og:site_name" content="{{ . }}"{{ if $self_close }} /{{ end }}>
+    {{- end -}}
+    {{- partial "helpers/lib-output/microformats/opengraph-media" (dict "page" . "openGraphMediaType" "video" "mediaType" "videos" "metadataGathered" $metadataGathered "openGraphProperties" (slice "secure_url" "type" "width" "height")) -}}
+    {{- with index $metadataGathered "see-also" -}}
+        {{- range . }}
+    <meta property="og:see_also" content="{{ . }}"{{ if $self_close }} /{{ end }}>
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
