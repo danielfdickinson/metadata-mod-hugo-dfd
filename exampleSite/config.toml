@@ -108,4 +108,9 @@ disableKinds = [ "RSS", "sitemap" ]
   [[module.imports]]
     ignoreConfig = true
     ignoreMounts = true
+    path = "github.com/danielfdickinson/image-handling-mod-hugo-dfd"
+
+  [[module.imports]]
+    ignoreConfig = true
+    ignoreMounts = true
     path = "github.com/danielfdickinson/minimal-test-theme-hugo-dfd"
