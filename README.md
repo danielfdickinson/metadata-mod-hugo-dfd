@@ -1,10 +1,9 @@
 # DFD Hugo Module for Metadata for Pages
 
-### Description
-
-Basic documentation for metadata-mod-hugo-dfd, a Hugo module by Daniel F. Dickinson for handling page metadata
+Basic documentation for metadata-mod-hugo-dfd, a Hugo module for handling page metadata, by Daniel F. Dickinson.
 
 _Note_: The exampleSite displays the gathered/generated metadata but does not modify the theme to use it (except to add the information gathered/generated to the footer).
+
 ## Status
 
 ![build-and-verify](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/actions/workflows/build-and-verify.yml/badge.svg)
@@ -94,7 +93,7 @@ _Note_: The exampleSite displays the gathered/generated metadata but does not mo
 ### 'type' metadata
 
 * Refers to the item type for feeds and Open Graph. We only use 'website' and 'article'. The homepage is of 'type' 'website' and other pages with a 'publishDate' (that is, all pages which exist under ``content`` and have frontmatter) are considered of type 'article'.
-* This can by overridden by a frontmatter ``Open GraphType`` in the page-level ``Params``. See [Object Types in the Open Graph Protocol](https://ogp.me/#types).
+* This can by overridden by a frontmatter ``openGraphType`` in the page-level ``Params``. See [Object Types in the Open Graph Protocol](https://ogp.me/#types).
 
 ### 'name'/Title Discovery and Use
 
@@ -110,7 +109,7 @@ _Note_: The exampleSite displays the gathered/generated metadata but does not mo
 * In the event of H1 issues:
   1. If site or per-page ``fixMultipleH1Error`` is not false do nothing; indicates that the content handling logic fixes up the H1 issues.
   2. Otherwise, if ``warnMultipleH1Error``, emit a build warning if there are H1 issues.
-  3. Finally, if ``ignoreMultpleH1Error`` is not true, fatally error the build on H1 issues.
+  3. Finally, if ``ignoreMultipleH1Error`` is not true, fatally error the build on H1 issues.
 
 ### 'siteName'/Site Title Discovery and Use
 
