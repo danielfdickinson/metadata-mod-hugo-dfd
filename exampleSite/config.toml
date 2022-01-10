@@ -10,7 +10,9 @@ disableKinds = [ "RSS", "sitemap" ]
 [params]
   mainSections = ["post","docs"]
   # Footnotes and TableOfContents don't work properly with a base href set in <head>
-  useBaseURL = false
+  # so we don't use them, but if you do, useBaseURL should be false instead of true
+  useBaseURL = true
+  imageConvertTo = "webp"
 
 [taxonomies]
   tag = "tags"
@@ -24,8 +26,7 @@ disableKinds = [ "RSS", "sitemap" ]
 # and https://www.regisphilibert.com/blog/2018/08/hugo-multilingual-part-1-managing-content-translation/
 [languages]
   [languages.en]
-    languageName = ":en:"
-    languageAltTitle = "English"
+    languageName = "English"
     title = "DFD Hugo Metadata Module"
     description = "DFD Hugo Module for Handling Metadata for Pages"
     weight = 1
@@ -74,6 +75,7 @@ disableKinds = [ "RSS", "sitemap" ]
 
 [module]
   replacements = "github.com/danielfdickinson/metadata-mod-hugo-dfd -> ../.."
+
   [[module.imports]]
     path = "github.com/danielfdickinson/metadata-mod-hugo-dfd"
 
