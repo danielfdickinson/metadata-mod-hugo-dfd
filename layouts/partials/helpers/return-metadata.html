@@ -6,35 +6,7 @@
 {{- /* For media objects (audio-file, image, video) we have both plural (all found)
      * and singular (only the first found).
      */ -}}
-{{- $allData := (
-    slice 
-    "description"
-    "date-created"
-    "date-expired"
-    "date-published"
-    "date-modified"
-    "keywords"
-    "locale"
-    "locale-alternate"
-    "media-audio-file"
-    "media-audio-files"
-    "media-image"
-    "media-images"
-    "media-video"
-    "media-videos"
-    "opengraph-type"
-    "reading-time"
-    "section"
-    "see-also"
-    "secure-url"
-    "summary"
-    "tags"
-    "title-page"
-    "title-site"
-    "url"
-    "word-count"
-) -}}
-
+{{- $allData := (slice "description" "date-created" "date-expired" "date-published" "date-modified" "keywords" "locale" "locale-alternate" "media-audio-file" "media-audio-files" "media-image" "media-images" "media-video" "media-videos" "opengraph-type" "reading-time" "section" "see-also" "secure-url" "summary" "tags" "title-page" "title-site" "url" "word-count") -}}
 {{- $dataToGather := $requestedData | default $allData -}}
 
 {{- range $dataToGather -}}
