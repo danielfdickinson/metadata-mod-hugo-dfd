@@ -1,5 +1,5 @@
 copyright = "© 2021-2022 Daniel F. Dickinson"
-homepage = "https://github.com/danielfdickinson/metadta-mod-hugo-dfd/"
+homepage = "https://github.com/danielfdickinson/metadata-mod-hugo-dfd/"
 description = "A Hugo module for handling page metadata"
 enableGitInfo = true
 defaultContentLanguage = "en"
