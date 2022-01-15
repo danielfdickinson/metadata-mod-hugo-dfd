@@ -2,7 +2,7 @@
 {{- $locales := (slice) -}}
 {{- if .IsTranslated -}}
     {{- range .Translations -}}
-        {{- with .LangCode -}}
+        {{- with .Lang -}}
             {{- $locales = $locales | append . -}}
         {{- end -}}
     {{- end -}}
