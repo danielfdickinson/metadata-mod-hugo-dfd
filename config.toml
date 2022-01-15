@@ -1,29 +1,9 @@
-copyright = "© 2021-2022 Daniel F. Dickinson"
-homepage = "https://github.com/danielfdickinson/metadata-mod-hugo-dfd/"
-description = "A Hugo module for handling page metadata"
-enableGitInfo = true
-defaultContentLanguage = "en"
-
-# See https://gohugo.io/content-management/multilingual/
-# and https://www.regisphilibert.com/blog/2018/08/hugo-multilingual-part-1-managing-content-translation/
-[languages]
-  [languages.en]
-    languageName = "English"
-    title = "DFD Metadata Hugo Module"
-    weight = 1
-
-[author]
-  name = "Daniel F. Dickinson"
-  homepage = "https://www.danielfdickinson.ca/about/"
-  email = "dfdpublic@wildtechgarden.ca"
-
-  [[author.authors]]
-    name = "Daniel F. Dickinson"
-    homepage = "https://www.danielfdickinson.ca/about/"
-    email = "dfdpublic@wildtechgarden.ca"
-
 # Image metadata depends on the how images are handled and therefore
 # this module depends on an image-handling module.
 [module]
+  [module.hugoVersion]
+    min = "0.80.0"
+    extended = false
+
   [[module.imports]]
     path = "github.com/danielfdickinson/image-handling-mod-hugo-dfd"
