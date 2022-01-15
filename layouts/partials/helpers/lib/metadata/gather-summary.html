@@ -1,7 +1,11 @@
 {{- $summary := .Summary -}}
 {{- /* Allow to specify a summary in the frontmatter, and render any Markdown in it */ -}}
 {{- if eq (.Params.summaryRenderMarkdown | default .Site.Params.summaryRenderMarkdown) true -}}
-    {{- $summary = ((.Params.summary | .RenderString) | default $summary) -}}
+    {{- if .File -}}
+        {{- $summary = ((.Params.summary | .RenderString) | default $summary) -}}
+    {{- else -}}
+        {{- $summary = ((.Params.summary | markdownify) | default $summary) -}}
+    {{- end -}}
 {{- end -}}
 {{- /* HTML is only preserved using the manual split method of generating a summary, or we rendered Markdown (above) */ -}}
 {{- if eq (.Params.summaryPreserveHtml | default .Site.Params.summaryPreserveHtml) true -}}

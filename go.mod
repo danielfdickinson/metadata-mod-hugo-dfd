@@ -2,4 +2,4 @@ module github.com/danielfdickinson/metadata-mod-hugo-dfd
 
 go 1.17
 
-require github.com/danielfdickinson/image-handling-mod-hugo-dfd v0.2.0 // indirect
+require github.com/danielfdickinson/image-handling-mod-hugo-dfd v0.2.2 // indirect
