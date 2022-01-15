@@ -2,7 +2,7 @@
 {{- $curPage := .page -}}
 {{- $metadataGathered := .metadataGathered -}}
 {{- $self_close := eq ( .Params.emptyElementStyle | default .Site.Params.emptyElementStyle ) "self-closing" -}}
-{{- if (.Params.microformatsSchemaEnable | default .Site.Params.microformatsSchemaEnable | default true) -}}
+{{- if (.Params.microformatsSchemaEnable | default .Site.Params.microformatsSchemaEnable | default true) }}
     <meta itemprop="name" content="{{ index $metadataGathered "title-page" }}"{{ if $self_close }} /{{ end }}>
     <meta itemprop="description" content="{{ $metadataGathered.description }}"{{ if $self_close }} /{{ end }}>
     {{- if .IsPage -}}
