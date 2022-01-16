@@ -10,7 +10,5 @@
 {{- /* HTML is only preserved using the manual split method of generating a summary, or we rendered Markdown (above) */ -}}
 {{- if eq (.Params.summaryPreserveHtml | default .Site.Params.summaryPreserveHtml) true -}}
     {{- $summary = $summary | safeHTML -}}
-{{- else -}}
-    {{- $summary = $summary | plainify -}}
 {{- end -}}
 {{- return $summary -}}
