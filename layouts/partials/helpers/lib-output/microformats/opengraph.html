@@ -26,11 +26,11 @@
     <meta property="article:expiration_time" {{ .Format $iso8601 | printf "content=%q" | safeHTMLAttr }}{{ if $self_close }} /{{ end }}>
         {{- end -}}
         {{- with $metadataGathered.section }}
-    <meta property="article:section" content="{{ . }}" />
+    <meta property="article:section" content="{{ . }}"{{ if $self_close }} /{{ end }}>
         {{- end -}}
         {{- with $metadataGathered.tags -}}
             {{- range . }}
-    <meta property="article:tag" content="{{ . }}" />
+    <meta property="article:tag" content="{{ . }}"{{ if $self_close }} /{{ end }}>
             {{- end -}}
         {{- end -}}
     {{- end -}}
