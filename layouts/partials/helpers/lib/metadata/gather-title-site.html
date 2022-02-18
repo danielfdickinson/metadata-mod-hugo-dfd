@@ -4,7 +4,7 @@
 {{- else if .Site.Params.Title -}}
     {{- $foundTitle = .Site.Params.Title -}}
 {{- else -}}
-    {{- $foundTitle = partial "helpers/lib/metadata/baseFindName" .Site.Home.Page -}}
+    {{- $foundTitle = partial "helpers/lib/metadata/find-page-title-base" .Site.Home.Page -}}
 {{- end -}}
 {{- if not $foundTitle -}}
     {{- $foundTitle = i18n "untitledSite" -}}

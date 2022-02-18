@@ -2,7 +2,7 @@
 {{- $foundTitle := partial "helpers/lib/metadata/find-page-title-base" . -}}
 {{- if not $foundTitle -}}
     {{- if .IsHome -}}
-        {{ with (partial "helpers/lib/metadata/gather-site-title" .) -}}
+        {{ with (partial "helpers/lib/metadata/gather-title-site" .) -}}
             {{- $foundTitle = . -}}
         {{- end -}}
     {{- else if .File -}}
