@@ -5,7 +5,7 @@
 {{- with .Params.series -}}
     {{- range $name := . -}}
         {{- $series := index $siteSeries ($name | urlize) -}}
-        {{- range $page := first 6 $series.Pages -}}
+        {{- range $page := first 10 $series.Pages -}}
             {{- if ne $page $curPage -}}
                 {{- $seeAlso = $seeAlso | append $page -}}
             {{- end -}}
@@ -14,7 +14,7 @@
 {{- end -}}
 {{- /* Otherwise, use Hugo's related content function */ -}}
 {{- if le (len $seeAlso) 0 -}}
-    {{- $related := .Site.Pages.Related . | first 6 -}}
+    {{- $related := .Site.Pages.Related . | first 10 -}}
     {{- with $related -}}
         {{- range . -}}
             {{- $seeAlso = $seeAlso | append .Page -}}
