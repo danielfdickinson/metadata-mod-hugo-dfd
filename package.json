@@ -1,6 +1,6 @@
 {
   "name": "metadata-mod-hugo-dfd",
-  "version": "0.3.0",
+  "version": "0.2.0",
   "description": "A Hugo module for handling page metadata and microformats",
   "main": "",
   "dependencies": {},
