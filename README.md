@@ -57,19 +57,25 @@ _Note_: The exampleSite displays the gathered/generated metadata but does not mo
 1. The first step to making use of this module is to add it to your site or theme.  In your configuration file:
 
    ``config.toml``
+
    ```toml
    [module]
      [[module.imports]]
        path = "github.com/danielfdickinson/metadata-mod-hugo-dfd"
+
    ```
+
    OR
    ``config.yaml``
+
    ```yaml
    module:
      imports:
        - path: github.com/danielfdickinson/metadata-mod-hugo-dfd
    ```
+
 2. Execute
+
    ```bash
    hugo mod get github.com/danielfdickinson/metadata-mod-hugo-dfd
    hugo mod tidy
@@ -79,20 +85,26 @@ _Note_: The exampleSite displays the gathered/generated metadata but does not mo
 
 * If ``emptyElementStyle`` is set to ``self-close`` in params (site or per-page), then empty tags produced by this module use 'self-closing' form (see above), otherwise 'void style' (see above).
   For example, with ``toml`` for the site as
+
   ```toml
   [params]
       emptyElementStyle = "self-close"
   ```
+
   you get
+
   ```html
       <meta name="generator" content="Hugo 0.91.2" />
       <meta name="keywords" content="Placeholder" />
   ```
+
   while not configuring ``emptyElementStyle`` produces
+
   ```html
       <meta name="generator" content="Hugo 0.91.2">
       <meta name="keywords" content="Placeholder">
   ```
+
   for ``exampleSite/docs/placeholder.md`` (which is output as ``public/docs/placeholder/index.html``) in the 'Test of metadata for \<head>' section of the page.
 
 ### 'summary' metadata configuration
