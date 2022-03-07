@@ -1,0 +1,21 @@
+{
+  "name": "metadata-mod-hugo-dfd",
+  "version": "0.3.0",
+  "description": "A Hugo module for handling page metadata and microformats",
+  "main": "",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielfdickinson/metadata-mod-hugo-dfd.git"
+  },
+  "author": "Daniel F. Dickinson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danielfdickinson/metadata-mod-hugo-dfd/issues"
+  },
+  "homepage": "https://github.com/danielfdickinson/metadata-mod-hugo-dfd#readme"
+}
