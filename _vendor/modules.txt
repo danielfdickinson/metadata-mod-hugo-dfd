@@ -1,2 +1,2 @@
-# github.com/danielfdickinson/image-handling-mod-hugo-dfd v0.3.0
-# github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.2.1
+# github.com/danielfdickinson/image-handling-mod-hugo-dfd v0.3.1-alpha.1
+# github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.2.2-alpha.1
