@@ -19,7 +19,19 @@ on:
       - '.vscode'
       - 'scripts'
 jobs:
+  check-source-code-validity:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Verify content formatting validity (Markdown lint)"
+        uses: DavidAnson/markdownlint-cli2-action@v5
+        with:
+          globs: |
+            README.md
+            exampleSite/content/*/*.md
+            exampleSite/content/**/*.md
   build-unminified-site:
+    needs: check-source-code-validity
     runs-on: ubuntu-20.04
     strategy:
       matrix:

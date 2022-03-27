@@ -120,7 +120,9 @@ _Note_: The exampleSite displays the gathered/generated metadata but does not mo
 * For the home page: defaults to ``.Description`` if present, otherwise the home page frontmatter description, otherwise the site ``.Description``, otherwise summary from ``.Site.Params``
   * For the found description: Render markdown if present, turn into plain text, replace newlines and carriage-returns with spaces, then condense all multiple space sequences to single spaces.
 
-### Notes on 'Date, Expiry, PublishDate, Lastmod (dateCreated, dateExpired, datePublished, and dateModified)' metadata items
+### Notes on 'Date, Expiry, PublishDate, Lastmod
+
+(dateCreated, dateExpired, datePublished, and dateModified)' metadata items
 
 * For pages that do no exist in the ``content`` directory (e.g. taxonomies, terms, subdirectories/sections with no '_index.md' or 'index.md' and/or a homepage with no '_index.md' in 'content'), then Hugo's ``.PublishDate`` (Open Graph name 'article:published_time') is .IsZero, treated as false or not present depending on the method of use. This is true even with the ``config.toml`` ``[frontmatter]`` ``publishDate`` configured.
 * With this exception, [the preferences for automatic values for the various date .Page variables can be configured using the ``frontmatter`` section on your Hugo config](https://gohugo.io/getting-started/configuration/#configure-dates).
