@@ -1,5 +1,5 @@
 - id: metadataGatherTest
-  translation: Metadata Gather Test
+  translation: Metadata gather test
 
 - id: metadataForHeadElementTest
-  translation: Test of Metadata for <head>
+  translation: Test of metadata for <head>

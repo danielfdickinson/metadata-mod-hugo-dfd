@@ -1,58 +1,61 @@
-# DFD Hugo Module for Metadata for Pages
+# DFD Hugo module for metadata for `.Page`
 
 Basic documentation for metadata-mod-hugo-dfd, a Hugo module for handling page metadata, by Daniel F. Dickinson.
 
-_Note_: The exampleSite displays the gathered/generated metadata but does not modify the theme to use it (except to add the information gathered/generated to the footer of each page).
+_Note_: The exampleSite displays the gathered/generated metadata on the footer of each page but does not modify the theme to use it elsewhere.
 
 ## Status
 
-![build-and-verify](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/actions/workflows/build-and-verify.yml/badge.svg)
+[![build-and-verify](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/actions/workflows/build-and-verify.yml/badge.svg)](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/actions/workflows/build-and-verify.yml)
+
+## GitHub repository
+
+<https://github.com/danielfdickinson/metadata-mod-hugo-dfd>
 
 ## Features
 
 * Provides a common method of accessing page metadata for use in layouts and shortcodes.
 * The following metadata is currently available:
   * date-created — timestamp of page creation (UTC)
-  * date-expired — timestamp when page expire(s/d) (UTC)
+  * date-expired — timestamp of page expiry (UTC)
   * date-published — timestamp of published page (UTC)
   * date-modified — timestamp of last time page was modified (UTC)
-  * description — A manually (page frontmatter) defined description of the page with a fallback to the page summary (below)
-  * description-no-fallback — Manually defined (page frontmatter) description of the page with no fallback
-  * keywords — Keywords for the page (generated from tags and other taxonomies)
+  * description — A page frontmatter defined description of the page with a fallback to the page summary (below)
+  * description-no-fallback — Page frontmatter description of the page with no fallback
+  * keywords — Keywords for the page (generated from all terms from all taxonomies)
   * locale — Language/locale in/for which page is written
-  * locale-alternate — Other available Languages/locales for the page
-  * media-audio-file — The first (if any) audio file associated with the page (from frontmatter)
-  * media-audio-files — All (if any) audio files associated with the page (from frontmatter)
-  * media-image — The first (if any) featured image, cover image, or thumbnail image associated with the page (see [DFD Hugo Image Handling Module](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd)).
-  * media-images — All (if any) featured images, cover images, or thumbnail images associated with the page (see [DFD Hugo Image Handling Module](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd)).
-  * media-video — The first (if any) video file associated with the page (from frontmatter)
-  * media-videos — All (if any) video files associated with the page (from frontmatter)
-  * opengraph-type — Open Graph Protocal type (article or website, depending on frontmatter)
+  * locale-alternate — Other available languages/locales for the page
+  * media-audio-file — The first (if any) audio file associated with the page _[Note 1](#note-1)_
+  * media-audio-files — All (if any) audio files associated with the page _[Note 1](#note-1)_
+  * media-image — The first (if any) featured image, cover image, or thumbnail image associated with the page _[Note 2](#note-2)_
+  * media-images — All (if any) featured images, cover images, or thumbnail images associated with the page _[Note 2](#note-2)_
+  * media-video — The first (if any) video file associated with the page _[Note 1](#note-1)_
+  * media-videos — All (if any) video files associated with the page _[Note 1](#note-1)_
+  * opengraph-type — Open Graph Protocal type _[Note 3](#note-3)_
   * reading-time — Approximate time in seconds to read page
   * section — Top-level section in which page resides
-  * see-also — Other pages in the same series if part of a series, otherwise automatically generated list of likely similar pages.
-  * secure-url — Secure (HTTPS) permanent URL for page (other URLs such as those for media-image may have their own secure URL as a part of the microformat)
-  * summary — A summary of the page, may be manually create or automatic, depending on frontmatter and site config
-  * tags — A list of tags associated with the page (from frontmatter)
+  * see-also — Automatically generated list of likely similar pages
+  * secure-url — Secure (HTTPS) permanent URL for page _[Note 4](#note-4)_
+  * summary — A summary of the page, may be manually created or automatic _[Note 5](#note-5)_
+  * tags — A list of tags associated with the page _[Note 1](#note-1)_
   * title-page — The title of the page (see below)
   * title-site — The title of the entire site (see below)
   * url — Permanent URL for the page (aka permalink)
   * word-count — Estimated number of words in the main page content
 * Has a unified and comprehensive means of finding page and site titles.
-* For \<head> metadata, supports either self-closing or 'void style' empty tags (that is either \<meta name="some-meta" content="some-content" /> or \<meta name="some-meta" content="some-content">)
-  * **NB**: Only for \<head> tags generated by this module; you'll need to implement the same logic for the rest of the items in your \<head> section if you need consistency.
+* For \<head> metadata, supports either self-closing or 'void style' empty tags _[Note 6](#note-6)_
 * Partials are 'shortcode safe' (which means they can work from layouts or shortcodes).
 * Logic for finding images for use by Open Graph and Twitter cards
-* Featured/cover images discovery/selection (combines with Open Graph/Twitter above)
-* Supports adding the microformats below to the page's \<head> section (HTML). Microformats are used by search engines and other automated page handling software including for displaying website 'cards' (image and summary of a page/site in a box).
+* Featured/cover images discovery/selection (combines with Open Graph/Twitter cards above)
+* Supports adding microformats to the page's \<head> section _[Note 7](#note-7)_
   * [Open Graph Protocol](https://ogp.me/)
   * [Twitter Cards](https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/abouts-cards)
   * [Schema (Website)](https://schema.org/)
   * [Facebook Admin ID for Domain Insights](https://www.facebook.com/insights/)
 
-## Basic Usage
+## Basic usage
 
-### Importing the Module
+### Importing the module
 
 1. The first step to making use of this module is to add it to your site or theme.  In your configuration file:
 
@@ -135,9 +138,9 @@ override site-wide params.
 * For the home page: defaults to ``.Description`` if present, otherwise the home page frontmatter description, otherwise the site ``.Description``, otherwise summary from ``.Site.Params``
   * For the found description: Render markdown if present, turn into plain text, replace newlines and carriage-returns with spaces, then condense all multiple space sequences to single spaces.
 
-### Notes on 'Date, Expiry, PublishDate, Lastmod
+### Notes on Date, Expiry, PublishDate, Lastmod
 
-(dateCreated, dateExpired, datePublished, and dateModified)' metadata items
+(dateCreated, dateExpired, datePublished, and dateModified) metadata items
 
 * For pages that do no exist in the ``content`` directory (e.g. taxonomies, terms, subdirectories/sections with no '_index.md' or 'index.md' and/or a homepage with no '_index.md' in 'content'), then Hugo's ``.PublishDate`` (Open Graph name 'article:published_time') is .IsZero, treated as false or not present depending on the method of use. This is true even with the ``config.toml`` ``[frontmatter]`` ``publishDate`` configured.
 * With this exception, [the preferences for automatic values for the various date .Page variables can be configured using the ``frontmatter`` section on your Hugo config](https://gohugo.io/getting-started/configuration/#configure-dates).
@@ -148,15 +151,15 @@ override site-wide params.
 
 * For all pages except the homepage, any taxonomy terms (but not taxonomies themselves; so not 'tags' and 'categories' for the default taxonomies configuration, but the terms you specify under 'tags' and/or under 'categories' in page frontmatter) in the page frontmatter are used to fill in the 'keywords' \<meta> tag.
 * For the homepage all taxonomy terms (but not taxonomies) are used to fill in the 'keywords' \<meta> tag.
-* The 'keywords' meta tag uses a comma separated list of terms, with no space added before or after the comma as a flat string as [defined in the HTML5 spec](https://html.spec.whatwg.org/multipage/semantics.html#standard-metadata-names).
-  * Note that this list is likely not going to get used by search engines due to historical misuse of this tag to mislead naive processors.
+* The 'keywords' meta tag uses a comma separated list of terms, with no space added before or after the comma, as a flat string as [defined in the HTML5 spec](https://html.spec.whatwg.org/multipage/semantics.html#standard-metadata-names).
+* Note that the 'keywords' meta tag will likely not be used by search engines due to historical misuse of this tag to mislead naive processors.
 
 ### 'type' metadata
 
 * Refers to the item type for feeds and Open Graph Protocol. We only use 'website' and 'article'. The homepage is of 'type' 'website' and other pages with a 'publishDate' (that is, all pages which exist under ``content`` and have frontmatter) are considered of type 'article'.
 * This can by overridden by a frontmatter ``openGraphType`` in the page-level ``Params``. See [Object Types in the Open Graph Protocol](https://ogp.me/#types).
 
-### 'name'/Title Discovery and Use
+### 'name'/title discovery and use
 
 * Uses the following order of preference for discovering title:
   1. ``title`` frontmatter (that is, ``.Page.Title``)
@@ -172,10 +175,41 @@ override site-wide params.
   2. Otherwise, if ``warnMultipleH1Error``, emit a build warning if there are H1 issues.
   3. Finally, if ``ignoreMultipleH1Error`` is not true, fatally error the build on H1 issues.
 
-### 'siteName'/Site Title Discovery and Use
+### 'siteName'/site title discovery and use
 
 * Uses the following order of preference for discovering site title:
   1. ``title`` configuration item for the site (or language-specific site)
   2. ``.Site.Params.Title``
   3. Try steps 1 and 2 for the 'name'/Title of the homepage
   4. If not title found in 1-3, use a title of 'Untitled Site'
+
+## End notes
+
+### Note 1
+
+From frontmatter
+
+### Note 2
+
+See [DFDs Hugo image handling module](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd)
+
+### Note 3
+
+ Article or website, depending on frontmatter
+
+### Note 4
+
+Other URLs such as those for media-image may have their own secure URL as a part of the microformat
+
+### Note 5
+
+Depending on frontmatter and site config
+
+### Note 6
+
+* That is a choice of either \<meta name="some-meta" content="some-content" /> or \<meta name="some-meta" content="some-content">
+* **Only for \<head> tags generated by this module**; you'll need to implement the same logic for the rest of the items in your \<head> section if you need consistency
+
+### Note 7
+
+Microformats are used by search engines and other automated page handling software including for displaying website 'cards' (image and summary of a page/site in a box on other sites, such as Discourse forum).
