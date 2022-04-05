@@ -1,7 +1,7 @@
 # Don't forget the trailing forward slash (/)
 baseURL = "https://example.com/"
 copyright = "© 2021-2022 Daniel F. Dickinson"
-homepage = "https://github.com/danielfdickinson/metadaa-mod-hugo-dfd"
+homepage = "https://github.com/danielfdickinson/metadata-mod-hugo-dfd"
 enableGitInfo = true
 enableRobotsTXT = true
 defaultContentLanguage = "en"
@@ -109,11 +109,7 @@ disableKinds = [ "RSS", "sitemap" ]
       target = "archetypes"
 
   [[module.imports]]
-    ignoreConfig = true
-    ignoreMounts = true
     path = "github.com/danielfdickinson/image-handling-mod-hugo-dfd"
 
   [[module.imports]]
-    ignoreConfig = true
-    ignoreMounts = true
     path = "github.com/danielfdickinson/minimal-test-theme-hugo-dfd"
