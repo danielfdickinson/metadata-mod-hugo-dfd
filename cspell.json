@@ -1,0 +1,13 @@
+{
+    "version": "0.2",
+    "ignorePaths": [],
+    "words": [
+        "tbody"
+    ],
+    "ignoreWords": [
+        "ascface",
+        "dont",
+        "robotstxt",
+        "warnf"
+    ]
+}
