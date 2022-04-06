@@ -1,24 +1,5 @@
-{{- /* If it is part of a series, link to related articles */ -}}
-{{- $seeAlso := (slice) -}}
-{{- $curPage := .Page -}}
-{{- $siteSeries := .Site.Taxonomies.series -}}
-{{- with .Params.series -}}
-    {{- range $name := . -}}
-        {{- $series := index $siteSeries ($name | urlize) -}}
-        {{- range $page := first 10 $series.Pages -}}
-            {{- if ne $page $curPage -}}
-                {{- $seeAlso = $seeAlso | append $page -}}
-            {{- end -}}
-        {{- end -}}
-    {{- end -}}
-{{- end -}}
-{{- /* Otherwise, use Hugo's related content function */ -}}
-{{- if le (len $seeAlso) 0 -}}
-    {{- $related := .Site.Pages.Related . | first 10 -}}
-    {{- with $related -}}
-        {{- range . -}}
-            {{- $seeAlso = $seeAlso | append .Page -}}
-        {{- end -}}
-    {{- end -}}
-{{- end -}}
-{{- return $seeAlso -}}
+{{- /* Use Hugo's related content function */ -}}
+{{- $numRelated := .Page.Params.metadataNumSeeAlso | default .Page.Site.Params.metadataNumSeeAlso | default 10 -}}
+{{- $related := .Site.Pages.Related . | first $numRelated -}}
+{{- return $related -}}
+{{- /* Remove trailing whitespace */ -}}
