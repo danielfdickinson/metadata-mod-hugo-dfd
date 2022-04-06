@@ -212,3 +212,14 @@ Depending on frontmatter and site config
 ### Note 7
 
 Microformats are used by search engines and other automated page handling software including for displaying website 'cards' (image and summary of a page/site in a box on other sites, such as Discourse forum).
+
+## Contributions Welcome
+
+If [your issue can't be found when searching both open and closed issues](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/issues?q=is%3Aissue), please add it!
+
+Please [check open issues on danielfdickinson/metadata-mod-hugo-dfd](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/issues)
+for enhancements and bugs that you would like resolved, write the fix, and submit a PR!
+
+Add and improving documention is always handy as well.
+
+Thank you, and I hope you find this repository useful.
