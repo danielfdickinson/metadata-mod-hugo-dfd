@@ -30,7 +30,7 @@
             <li><b>{{ $key }}:</b> {{ $dataValue }}</li>
         {{- end }}
         </ul>
-        <h2>{{ i18n "metadataForHeadElementTest" }}</h2>
+        <h2 id="test-of-metadata-for-head">{{ i18n "metadataForHeadElementTest" }}</h2>
         <pre><code>
     {{ partial "head/metadata" . | htmlEscape | safeHTML -}}
         </code></pre>
