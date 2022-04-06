@@ -7,6 +7,9 @@ categories:
     - Uncategorized
 tags:
     - Placeholder
+summaryRenderMarkdown: true
+summaryPreserveHTML: false
+summary: Summary **with** `summaryRenderMarkdown` but not `summaryPreserveHTML`
 ---
 
 A placeholder for a post
