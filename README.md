@@ -31,7 +31,7 @@ _Note_: The exampleSite displays the gathered/generated metadata on the footer o
   * media-images — All (if any) featured images, cover images, or thumbnail images associated with the page _[Note 2](#note-2)_
   * media-video — The first (if any) video file associated with the page _[Note 1](#note-1)_
   * media-videos — All (if any) video files associated with the page _[Note 1](#note-1)_
-  * opengraph-type — Open Graph Protocal type _[Note 3](#note-3)_
+  * opengraph-type — Open Graph Protocol type _[Note 3](#note-3)_
   * reading-time — Approximate time in seconds to read page
   * section — Top-level section in which page resides
   * secure-url — Secure (HTTPS) permanent URL for page _[Note 4](#note-4)_
