@@ -1,3 +1,4 @@
+# Don't forget the trailing forward slash (/)
 baseURL = "https://example.com/"
 copyright = "© 2021-2022 Daniel F. Dickinson"
 homepage = "https://github.com/danielfdickinson/metadaa-mod-hugo-dfd"
@@ -10,8 +11,8 @@ disableKinds = [ "RSS", "sitemap" ]
 [params]
   mainSections = ["post","docs"]
   # Footnotes and TableOfContents don't work properly with a base href set in <head>
-  # so we don't use them, but if you do, useBaseURL should be false instead of true
-  useBaseURL = true
+  # so we don't use it, but if you do, useBaseURL should be false instead of true
+  useBaseURL = false
   imageConvertTo = "webp"
 
 [taxonomies]
@@ -28,7 +29,7 @@ disableKinds = [ "RSS", "sitemap" ]
   [languages.en]
     languageName = "English"
     title = "DFD Hugo Metadata Module"
-    description = "DFD Hugo Module for Handling Metadata for Pages"
+    description = "DFD Hugo module for metadata for .Page"
     weight = 1
     
     [languages.en.menu]
