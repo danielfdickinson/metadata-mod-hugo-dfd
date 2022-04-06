@@ -8,4 +8,5 @@ categories:
 tags:
     - Placeholder
 datesPreserveTimezone: true
+sitemapChangeFreq: "monthly"
 ---
