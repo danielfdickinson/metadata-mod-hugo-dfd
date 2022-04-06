@@ -1,0 +1,6 @@
+{{- if ne (.Params.internalTemplatesOverrideRSS | default .Site.Params.internalTemplatesOverrideRSS | default true) false -}}
+    {{- template "_internal/_default/rss.xml" . -}}
+{{- else -}}
+    {{- partial "internal-overrides/rss.xml" . -}}
+{{- end -}}
+{{- /* Remove trailing newlines */ -}}

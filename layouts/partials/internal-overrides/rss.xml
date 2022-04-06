@@ -1,0 +1,50 @@
+{{- /* Modified from Hugo internal template at https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/_default/rss.xml */ -}}
+{{- $pctx := . -}}
+{{- $page_metadata := partial "helpers/return-metadata" (dict "page" .Page "requestedData" (slice "title-page" "title-site")) -}}
+{{- $pages := slice -}}
+{{- if .IsHome -}}
+  {{- $pctx = .Site -}}
+  {{- $pages = where (where (where .Site.Pages "Section" "in" site.Params.mainSections) "Parent.Kind" "ne" "home") "Parent.Parent.Kind" "ne" "section" -}}
+{{- else if $.IsSection -}}
+  {{- $pages = where $pctx.Pages "Parent.Kind" "ne" "home" -}}
+  {{- with $pages -}}
+    {{- $pages = where $pages "Parent.Parent.Kind" "ne" "section" -}}
+  {{- end -}}
+{{- else -}}
+{{- $pages = $pctx.Pages -}}
+{{- end -}}
+{{- $pages = (($pages.ByWeight).ByPublishDate).Reverse }}
+{{- $limit := .Site.Config.Services.RSS.Limit -}}
+{{- if ge $limit 1 -}}
+{{- $pages = $pages | first $limit -}}
+{{- end -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ if eq $pctx .Site }}{{ (index $page_metadata "title-site") }}{{ else }}{{ with (index $page_metadata "title-page") }}{{ . }} on {{ end }}{{ (index $page_metadata "title-site") }}{{ end }}</title>
+    <link>{{ .Permalink }}</link>
+    <description>Recent content {{ if ne $pctx .Site }}{{ with (index $page_metadata "title-page") }}in {{ . }} {{ end }}{{ end }}on {{ (index $page_metadata "title-site") }}</description>
+    <generator>Hugo -- gohugo.io</generator>{{ with .Site.LanguageCode }}
+    <language>{{.}}</language>{{end}}{{ with .Site.Author.email }}
+    <managingEditor>{{.}}{{ with $.Site.Author.name }} ({{.}}){{end}}</managingEditor>{{end}}{{ with .Site.Author.email }}
+    <webMaster>{{.}}{{ with $.Site.Author.name }} ({{.}}){{end}}</webMaster>{{end}}{{ with .Site.Copyright }}
+    <copyright>{{.}}</copyright>{{end}}
+    <lastBuildDate>{{ now.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>
+    {{- with .OutputFormats.Get "RSS" -}}
+    {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
+    {{- end -}}
+    {{ range $pages }}
+      {{- $item_page_metadata := partial "helpers/return-metadata" (dict "page" .Page "requestedData" (slice "title-page" "title-site" "description-no-fallback" "summary")) -}}
+    <item>
+      <title>{{ index $item_page_metadata "title-page" }}</title>
+      <link>{{ .Permalink }}</link>
+      <pubDate>{{ .PublishDate.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+      {{- /* TODO: Add ability to have multiple authors */ -}}
+      {{ if or (not .Params.author) (eq .Params.author .Site.Author.name) }}{{ with .Site.Author.email }}<author>{{.}}{{ with $.Site.Author.name }} ({{.}}){{end}}</author>{{end}}{{end}}
+      <guid>{{ .Permalink }}</guid>
+      <description>{{ with (index $item_page_metadata "summary") }}{{ . | plainify | html }}{{ else }}{{ index $item_page_metadata "description-no-fallback" | html }}{{ end }}</description>
+    </item>
+    {{ end }}
+  </channel>
+</rss>
+{{- /* Remove trailing newlines */ -}}

@@ -1,0 +1,6 @@
+{{- if ne (.Params.internalTemplatesOverrideSitemap | default .Site.Params.internalTemplatesOverrideSitemap | default true) false -}}
+    {{- template "_internal/_default/sitemap.xml" . -}}
+{{- else -}}
+    {{- partial "internal-overrides/sitemap.xml" . -}}
+{{- end -}}
+{{- /* Remove trailing newlines */ -}}
