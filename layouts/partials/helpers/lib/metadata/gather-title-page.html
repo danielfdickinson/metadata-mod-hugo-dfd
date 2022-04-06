@@ -20,11 +20,13 @@
 {{- if $foundTitle -}}
     {{- $multipleH1 := false -}}
     {{- if not $titleFromContent -}}
-        {{- /* Only allowed one h1 per page */ -}}
+        {{- /* Only allowed one h1 per page and we will be adding one via layouts */ -}}
         {{- $multipleH1 = gt (len (findRE "<h1.*?>(.|\n)*?</h1>" .Content)) 0 -}}
     {{- else -}}
+        {{- /* Only allowed one h1 per page and it comes from .Content */ -}}
         {{- $multipleH1 = gt (len (findRE "<h1.*?>(.|\n)*?</h1>" .Content)) 1 -}}
     {{- end -}}
+    {{- /* We don't actually do the fixup, we just want to know if a fixup will be done */ -}}
     {{- if eq (.Params.fixMultipleH1Error | default .Site.Params.fixMultipleH1Error) false -}}
         {{- if eq (.Params.warnMultipleH1Error | default .Site.Params.warnMultipleH1Error) true -}}
             {{- warnf "More than one H1 element (title + from content). This is against recommended best practises: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#multiple_h1_elements_on_one_page" -}}

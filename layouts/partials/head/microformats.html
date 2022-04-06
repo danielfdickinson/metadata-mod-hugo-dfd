@@ -1,6 +1,6 @@
 {{- if (.Params.microformatsEnable | default .Site.Params.microformatsEnable | default true) -}}
 {{- $metadataGathered := partial "helpers/return-metadata" (dict "page" .Page) -}}
-{{- $microformatsContext := (dict "curPage" . "metadataGathered" $metadataGathered) -}}
+{{- $microformatsContext := (dict "curPage" .Page "metadataGathered" $metadataGathered) -}}
     {{- partial "helpers/lib-output/microformats/facebook" $microformatsContext }}
     {{- partial "helpers/lib-output/microformats/opengraph" $microformatsContext }}
     {{- partial "helpers/lib-output/microformats/schema" $microformatsContext }}
