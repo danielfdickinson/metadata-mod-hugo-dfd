@@ -6,7 +6,6 @@ enableGitInfo = true
 enableRobotsTXT = true
 defaultContentLanguage = "en"
 summaryLength = 25
-disableKinds = [ "RSS", "sitemap" ]
 
 [params]
 mainSections = ["post", "docs"]
