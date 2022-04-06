@@ -1,4 +1,4 @@
-{{- if ne (.Params.internalTemplatesOverrideSitemap | default .Site.Params.internalTemplatesOverrideSitemap | default true) false -}}
+{{- if ne (.Params.internalTemplatesOverrideSitemap | default .Site.Params.internalTemplatesOverrideSitemap | default true) true -}}
     {{- template "_internal/_default/sitemap.xml" . -}}
 {{- else -}}
     {{- partial "internal-overrides/sitemap.xml" . -}}

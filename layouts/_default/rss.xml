@@ -1,4 +1,4 @@
-{{- if ne (.Params.internalTemplatesOverrideRSS | default .Site.Params.internalTemplatesOverrideRSS | default true) false -}}
+{{- if ne (.Params.internalTemplatesOverrideRSS | default .Site.Params.internalTemplatesOverrideRSS | default true) true -}}
     {{- template "_internal/_default/rss.xml" . -}}
 {{- else -}}
     {{- partial "internal-overrides/rss.xml" . -}}
