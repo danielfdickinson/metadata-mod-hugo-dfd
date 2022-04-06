@@ -1,6 +1,6 @@
 # DFD Hugo module for metadata for `.Page`
 
-Basic documentation for metadata-mod-hugo-dfd, a Hugo module for handling page metadata, by Daniel F. Dickinson.
+Basic documentation for metadata-mod-hugo-dfd, a Hugo module by [Daniel F. Dickinson](https://github.com/danielfdickinson) for handling page metadata.
 
 _Note_: The exampleSite displays the gathered/generated metadata on the footer of each page but does not modify the theme to use it elsewhere.
 
@@ -34,8 +34,8 @@ _Note_: The exampleSite displays the gathered/generated metadata on the footer o
   * opengraph-type — Open Graph Protocal type _[Note 3](#note-3)_
   * reading-time — Approximate time in seconds to read page
   * section — Top-level section in which page resides
-  * see-also — Automatically generated list of likely similar pages
   * secure-url — Secure (HTTPS) permanent URL for page _[Note 4](#note-4)_
+  * see-also — Automatically generated list of likely similar pages
   * summary — A summary of the page, may be manually created or automatic _[Note 5](#note-5)_
   * tags — A list of tags associated with the page _[Note 1](#note-1)_
   * title-page — The title of the page (see below)
@@ -63,9 +63,8 @@ _Note_: The exampleSite displays the gathered/generated metadata on the footer o
 
    ```toml
    [module]
-     [[module.imports]]
-       path = "github.com/danielfdickinson/metadata-mod-hugo-dfd"
-
+       [[module.imports]]
+           path = "github.com/danielfdickinson/metadata-mod-hugo-dfd"
    ```
 
    OR
@@ -101,12 +100,12 @@ override site-wide params.
 
 ### \<head> metadata configuration
 
-* If ``emptyElementStyle`` is set to ``self-close`` in params (site or per-page), then empty tags produced by this module use 'self-closing' form (see above), otherwise 'void style' (see above).
+* If ``emptyElementStyle`` is set to ``self-close`` in params (site or per-page), then empty tags produced by this module use 'self-closing' form (see above), otherwise 'void style' (see above). _([Note 6](#note-6))_
   For example, with ``toml`` for the site as
 
   ```toml
   [params]
-      emptyElementStyle = "self-close"
+       emptyElementStyle = "self-close"
   ```
 
   you get
@@ -123,7 +122,7 @@ override site-wide params.
       <meta name="keywords" content="Placeholder">
   ```
 
-  for ``exampleSite/docs/placeholder.md`` (which is output as ``public/docs/placeholder/index.html``) in the 'Test of metadata for \<head>' section of the page.
+  in the 'Test of metadata for \<head>' section of the page from ``exampleSite/docs/placeholder.md`` as the generated [/docs/placeholder/](/docs/placeholder/#test-of-metadata-for-head).
 
 ### 'summary' metadata configuration
 
