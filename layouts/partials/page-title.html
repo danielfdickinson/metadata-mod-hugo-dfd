@@ -1,0 +1,11 @@
+{{- $page_metadata := partial "helpers/return-metadata" (dict "page" . "requestedData" (slice "title-page")) -}}
+{{- if $page_metadata }}
+    {{- index $page_metadata "title-page" -}}
+{{- else -}}
+    {{- if .File -}}
+        {{- warnf (printf "Unable to find title-page on page %s" .File.Path) -}}
+    {{- else -}}
+        {{- warnf (printf "Unable to find title-page on page %s" .Title) -}}
+    {{- end -}}
+{{- end -}}
+{{- /* Remove trailing newlines */ -}}
