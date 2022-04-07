@@ -1,3 +1,4 @@
+{{- /* Choose your override or Hugo internal template at https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/_default/sitemap.xml */ -}}
 {{- if ne (.Site.Params.internalTemplatesOverrideSitemap | default true) true -}}
     {{- template "_internal/_default/sitemap.xml" . -}}
 {{- else -}}
