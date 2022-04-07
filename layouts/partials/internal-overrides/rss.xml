@@ -64,10 +64,14 @@
             {{- end }}
             <guid>{{ .Permalink }}</guid>
             <description>
-            {{- with (index $item_page_metadata "summary") -}}
-                {{- . | plainify | strings.TrimLeft " " | strings.TrimRight "\n\t " -}}
+            {{- if (.Params.rssIncludeMainArticle | default .Site.Params.rssIncludeMainArticle | default false) -}}
+                {{- .Content | strings.TrimLeft "\n\t " | strings.TrimRight "\n\t " -}}
             {{- else -}}
-                {{- index $item_page_metadata "description-no-fallback" | strings.TrimLeft " " | strings.TrimRight "\n\t " -}}
+                {{- with (index $item_page_metadata "summary") -}}
+                    {{- . | plainify | strings.TrimLeft " " | strings.TrimRight "\n\t " -}}
+                {{- else -}}
+                    {{- index $item_page_metadata "description-no-fallback" | strings.TrimLeft " " | strings.TrimRight "\n\t " -}}
+                {{- end -}}
             {{- end -}}
             </description>
         </item>

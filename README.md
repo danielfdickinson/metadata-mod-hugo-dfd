@@ -81,6 +81,22 @@ _Note_: The exampleSite displays the gathered/generated metadata but does not mo
    hugo mod tidy
    ```
 
+## Summary of configurable params
+
+Unless otherwise noted, params may be per-page (in frontmatter), or
+in the site 'params' section in you site configuration file(s). Page params
+override site-wide params.
+
+| Param | Default | Description |
+|-------|---------|-------------|
+| internalTemplatesOverrideRSS | _true_ | Site-level params only. When true overrides the internal template for RSS feeds (`rss.xml`) with one from this module |
+| internalTemplatesOverrideSitemap | _true_ | Site-level params only. When true overrides the internal template for Sitemap protocol file (`sitemap.xml`) with one from this module |
+| pageCanonical | _true_ | Page-level params only. When false omits this page from the `sitemap.xml`, if applicable |
+| rssIncludeMainArticle | _false_ | When true include the pages `.Content` (that is the rendered content from the page's file such as `/content/posts/a-post.md`) directly in the RSS feed instead of only a summary or description |
+| sitemapChangeFreq | _(nil)_ | Page-level params only. When set, is used as the [approximate change frequency in the `sitemap.xml` of the page](https://www.sitemaps.org/protocol.html). If present overrides the [site-level 'sitemap.changefreq' in the config](https://gohugo.io/templates/sitemap-template/#configuration). If neither is specified, the default is "" (omitted from `sitemap.xml`). |
+| sitemapPriority | _(nil)_ | Page-level params only. When set, is used as the [priority (via the `sitemap.xml`) of the page relative to other pages on the site](https://www.sitemaps.org/protocol.html). If present overrides the [site-level 'sitemap.priority' in the config](https://gohugo.io/templates/sitemap-template/#configuration). If neither is specified, the default is '0.5' for a page that has a publishDate (any non-virtual page with frontmatter) or '0' for a virtual page or page without frontmatter. |
+| taxCanonical | _false_ | When true includes this taxonomy or term page in the `sitemap.xml`, if applicable |
+
 ### \<head> metadata configuration
 
 * If ``emptyElementStyle`` is set to ``self-close`` in params (site or per-page), then empty tags produced by this module use 'self-closing' form (see above), otherwise 'void style' (see above).
