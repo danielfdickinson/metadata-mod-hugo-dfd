@@ -2,8 +2,6 @@
 
 Basic documentation for metadata-mod-hugo-dfd, a Hugo module by [Daniel F. Dickinson](https://github.com/danielfdickinson) for handling page metadata intended to be used in generating the 'head' section, as well as used in page elements.
 
-_Note_: The exampleSite displays the gathered/generated metadata on the footer of each page but does not modify the theme to use it elsewhere.
-
 ## Status
 
 [![build-and-verify](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/actions/workflows/build-and-verify.yml/badge.svg)](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/actions/workflows/build-and-verify.yml)
