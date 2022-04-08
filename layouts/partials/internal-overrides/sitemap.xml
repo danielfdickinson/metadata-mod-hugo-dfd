@@ -4,8 +4,8 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   {{- range .Data.Pages -}}
     {{- if and .Permalink (ne .Params.pageCanonical false) (or (eq (.Param "taxCanonical") true) (not (or (.Data.Singular) (.Data.Plural)))) -}}
-      {{- $pagePriority := .Params.sitemapPriority | default .Sitemap.Priority -}}
-      {{- $pageChangeFreq := .Params.sitemapChangeFreq | default .Sitemap.ChangeFreq | default "" -}}
+      {{- $pagePriority := .Sitemap.Priority -}}
+      {{- $pageChangeFreq := .Sitemap.ChangeFreq -}}
       {{- $validChangeFreqs := (slice "always" "hourly" "daily" "weekly" "monthly" "yearly" "never" "") -}}
       {{- if not (in $validChangeFreqs $pageChangeFreq) -}}
         {{- if .File -}}

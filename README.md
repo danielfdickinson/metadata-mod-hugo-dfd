@@ -93,8 +93,6 @@ override site-wide params.
 | internalTemplatesOverrideSitemap | _true_ | Site-level params only. When true overrides the internal template for Sitemap protocol file (`sitemap.xml`) with one from this module |
 | pageCanonical | _true_ | Page-level params only. When false omits this page from the `sitemap.xml`, if applicable |
 | rssIncludeMainArticle | _false_ | When true include the pages `.Content` (that is the rendered content from the page's file such as `/content/posts/a-post.md`) directly in the RSS feed instead of only a summary or description |
-| sitemapChangeFreq | _(nil)_ | Page-level params only. When set, is used as the [approximate change frequency in the `sitemap.xml` of the page](https://www.sitemaps.org/protocol.html). If present overrides the [site-level 'sitemap.changefreq' in the config](https://gohugo.io/templates/sitemap-template/#configuration). If neither is specified, the default is "" (omitted from `sitemap.xml`). |
-| sitemapPriority | _(nil)_ | Page-level params only. When set, is used as the [priority (via the `sitemap.xml`) of the page relative to other pages on the site](https://www.sitemaps.org/protocol.html). If present overrides the [site-level 'sitemap.priority' in the config](https://gohugo.io/templates/sitemap-template/#configuration). If neither is specified, the default is '0.5' for a page that has a publishDate (any non-virtual page with frontmatter) or '0' for a virtual page or page without frontmatter. |
 | taxCanonical | _false_ | When true includes this taxonomy or term page in the `sitemap.xml`, if applicable |
 
 ### \<head> metadata configuration
