@@ -211,7 +211,23 @@ Depending on frontmatter and site config
 
 Microformats are used by search engines and other automated page handling software including for displaying website 'cards' (image and summary of a page/site in a box on other sites, such as Discourse forum).
 
-## Contributions Welcome
+### Note 8
+
+When using `enableRobotsTXT = true` and the default of overriding the `robots.txt` template with the one from this repo, if `disableKinds` includes `"sitemap"` (e.g. `disableKinds = ["RSS","sitemap"]`) then you will also need to add the following to your `config.toml`:
+
+```toml
+[sitemap]
+    filename = ""
+```
+
+to avoid the generated `robots.txt` (`/public/robots.txt` from your project root in the default configuration) containing the following type of line
+
+```text
+Sitemap: <your baseURL from config.toml>
+```
+
+instead of it being omitted from `robots.txt`.
+
 
 If [your issue can't be found when searching both open and closed issues](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/issues?q=is%3Aissue), please add it!
 
