@@ -228,12 +228,15 @@ Sitemap: <your baseURL from config.toml>
 
 instead of it being omitted from `robots.txt`.
 
+## Contributions welcome
 
 If [your issue can't be found when searching both open and closed issues](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/issues?q=is%3Aissue), please add it!
 
 Please [check open issues on danielfdickinson/metadata-mod-hugo-dfd](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/issues)
 for enhancements and bugs that you would like resolved, write the fix, and submit a PR!
 
-Add and improving documention is always handy as well.
+Adding and improving documention is always handy as well.
 
-Thank you, and I hope you find this repository useful.
+## Support and general questions
+
+Please use [GitHub Discussions](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/discussions) for support and general questions.
