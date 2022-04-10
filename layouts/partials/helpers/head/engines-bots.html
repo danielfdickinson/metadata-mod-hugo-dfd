@@ -1,0 +1,23 @@
+{{- /* NOTE: For Production make sure you add `HUGO_ENV="production"` before your build command */ -}}
+{{- $self_close := eq ( .Params.emptyElementStyle | default .Site.Params.emptyElementStyle ) "self-close" }}
+{{- $pageCanonical := .Page.Params.pageCanonical | default true -}}
+{{- $taxCanonical := .Page.Params.taxCanonical | default .Page.Site.Params.taxCanonical | default false -}}
+{{- if hugo.IsProduction }}
+    <meta name="robots" content="index, follow"{{ if $self_close }} /{{ end }}>
+    {{- if and .Permalink (eq $pageCanonical true) (or (eq $taxCanonical true) (not (or (.Data.Singular) (.Data.Plural)))) }}
+    <link rel="canonical" href="{{ .Permalink }}"{{ if $self_close }} /{{ end }}>
+    {{- else if .Page.Params.toCanonical }}
+    <link rel="canonical" href="{{ .Page.Params.toCanonical }}"{{ if $self_close }} /{{ end }}>
+    {{- end }}
+{{- else }}
+    <meta name="robots" content="noindex, nofollow"{{ if $self_close }} /{{ end }}>
+    {{- if and .Permalink (eq $pageCanonical true) (or (eq $taxCanonical true) (not (or (.Data.Singular) (.Data.Plural)))) }}
+    {{ (printf "<!-- link rel=\"alternate\" data=\"will-be-canonical\" href=\"%s\" -->" .Permalink) | safeHTML -}}
+    {{- else if .Page.Params.toCanonical }}
+    {{ (printf "<!-- link rel=\"alternate\" data=\"will-be-canonical\" href=\"%s\" -->" .Page.Params.toCanonical) | safeHTML -}}
+    {{- end -}}
+    {{- if and .Permalink (eq $pageCanonical false) (or (eq $taxCanonical false) (not (or (.Data.Singular) (.Data.Plural)))) }}
+    {{ (printf "<!-- link rel=\"alternate\" data=\"will-not-be-canonical\" href=\"%s\" -->" .Permalink) | safeHTML -}}
+    {{- end -}}
+{{- end -}}
+{{- /* Remove trailing newlines */ -}}

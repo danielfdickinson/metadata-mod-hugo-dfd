@@ -1,0 +1,17 @@
+{{- $ctx := . -}}
+{{- $curPage := .Page -}}
+{{- $self_close := eq ( .Params.emptyElementStyle | default .Site.Params.emptyElementStyle ) "self-close" }}
+{{- if .OutputFormats.Get "RSS" -}}
+    {{- with .OutputFormats.Get "RSS" }}
+        {{- $page_title_metadata := partial "helpers/return-metadata" (dict "page" $curPage "requestedData" (slice "title-site" "title-page")) -}}
+        {{- $pageTitle := index $page_title_metadata "title-page" -}}
+        {{- $siteTitle := index $page_title_metadata "title-site" -}}
+        {{- $rssTitle := $siteTitle -}}
+        {{- if ne $pageTitle $siteTitle -}}
+            {{- $rssTitle = printf "%s | %s" $pageTitle $siteTitle -}}
+        {{- end -}}
+    <link href="{{ .RelPermalink }}" rel="alternate" type="application/rss+xml" title="{{ $rssTitle }}"{{ if $self_close }} /{{ end }}>
+    <link href="{{ .RelPermalink }}" rel="feed" type="application/rss+xml" title="{{ $rssTitle }}"{{ if $self_close }} /{{ end }}>
+    {{- end -}}
+{{- end -}}
+{{- /* Remove trailing newlines */ -}}
