@@ -89,7 +89,7 @@ override site-wide params.
 
 | Param | Default | Description |
 |-------|---------|-------------|
-| internalTemplatesOverrideRobotsTXT | _true_ | Site-level params only. When true overrides the internal template for robots.txt (`robots.txt`) with one from this module _[Note 8]\(#note-8)_ |
+| internalTemplatesOverrideRobotsTXT | _true_ | Site-level params only. When true overrides the internal template for robots.txt (`robots.txt`) with one from this module _[Note 8](#note-8)_ |
 | internalTemplatesOverrideRSS | _true_ | Site-level params only. When true overrides the internal template for RSS feeds (`rss.xml`) with one from this module |
 | internalTemplatesOverrideSitemap | _true_ | Site-level params only. When true overrides the internal template for Sitemap protocol file (`sitemap.xml`) with one from this module |
 | pageCanonical | _true_ | Page-level params only. When false omits this page from the `sitemap.xml`, if applicable |
