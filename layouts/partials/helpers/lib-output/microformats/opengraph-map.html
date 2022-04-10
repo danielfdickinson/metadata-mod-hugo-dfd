@@ -3,7 +3,7 @@
 {{- $openGraphMap := .openGraphMap -}}
 {{- $openGraphMediaType := .openGraphMediaType -}}
 {{- $openGraphProperties := .openGraphProperties -}}
-{{- $self_close := eq ( .Params.emptyElementStyle | default .Site.Params.emptyElementStyle ) "self-closing" }}
+{{- $self_close := eq ( .Params.emptyElementStyle | default .Site.Params.emptyElementStyle ) "self-close" }}
     <meta property="{{ printf "og:%s" $openGraphMediaType }}" content="{{ index $openGraphMap "url" }}"{{ if $self_close }} /{{ end }}>
 {{- range $openGraphProperties -}}
     {{- if (index $openGraphMap .) }}

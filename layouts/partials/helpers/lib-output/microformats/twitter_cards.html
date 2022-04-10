@@ -1,7 +1,7 @@
 {{- $ctx := . -}}
 {{- $curPage := .page -}}
 {{- $metadataGathered := .metadataGathered -}}
-{{- $self_close := eq ( .Params.emptyElementStyle | default .Site.Params.emptyElementStyle ) "self-closing" -}}
+{{- $self_close := eq ( .Params.emptyElementStyle | default .Site.Params.emptyElementStyle ) "self-close" -}}
 {{- if (.Params.microformatsTwitterCardEnable | default .Site.Params.microformatsTwitterCardEnable | default true) -}}
     {{- with index $metadataGathered "media-image" }}
     <meta name="twitter:card" content="summary_large_image"{{ if $self_close }} /{{ end }}>
