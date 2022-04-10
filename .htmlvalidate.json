@@ -8,8 +8,52 @@
         "html5",
         {
             "th": {
-                "inherit": "th",
-                "requiredAttributes": [ ]
+                "flow": true,
+                "implicitClosed": ["td", "th"],
+                "attributes": {
+                    "align": {
+                        "deprecated": true
+                    },
+                    "axis": {
+                        "deprecated": true
+                    },
+                    "background": {
+                        "deprecated": true
+                    },
+                    "bgcolor": {
+                        "deprecated": true
+                    },
+                    "char": {
+                        "deprecated": true
+                    },
+                    "charoff": {
+                        "deprecated": true
+                    },
+                    "colspan": {
+                        "enum": ["/\\d+/"]
+                    },
+                    "height": {
+                        "deprecated": true
+                    },
+                    "nowrap": {
+                        "deprecated": true
+                    },
+                    "rowspan": {
+                        "enum": ["/\\d+/"]
+                    },
+                    "scope": {
+                        "required": false,
+                        "enum": ["row", "col", "rowgroup", "colgroup", "auto"]
+                    },
+                    "valign": {
+                        "deprecated": true
+                    },
+                    "width": {
+                        "deprecated": true
+                    }
+                },
+                "permittedContent": ["@flow"],
+                "permittedDescendants": [{ "exclude": ["header", "footer", "@sectioning", "@heading"] }]
             }
         }
     ],
