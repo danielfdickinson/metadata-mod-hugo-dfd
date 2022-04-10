@@ -1,0 +1,23 @@
+# robotstxt.org
+
+{{- $defaultSitemap := site.Home.Sitemap.Filename -}}
+{{- with $defaultSitemap -}}
+    {{- $defaultSitemap = . | absURL -}}
+{{- end -}}
+{{- $userAgentMap := .Site.Params.robotsTxtUserAgentMap | default (slice (dict "userAgent" "*" "sitemap" $defaultSitemap)) -}}
+{{- if not hugo.IsProduction -}}
+    {{- $userAgentMap = (slice (dict "userAgent" "*" "disallowList" (slice "/"))) -}}
+{{- end -}}
+{{ range $userAgentMap }}
+
+User-agent: {{ .userAgent -}}
+    {{- with .sitemap }}
+Sitemap: {{ . }}
+    {{- end -}}
+    {{- range .allowList }}
+Allow: {{ . }}
+    {{- end -}}
+    {{- range .disallowList }}
+Disallow: {{ . }}
+    {{- end -}}
+{{- end }}

@@ -1,0 +1,7 @@
+{{- /* Choose your override or Hugo internal template at https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/_default/robots.txt */ -}}
+{{- if ne (.Site.Params.internalTemplatesOverrideRobotsTXT | default true) true -}}
+    {{- template "_internal/_default/robots.txt" . -}}
+{{- else -}}
+    {{- partial "internal-overrides/robots.txt" . -}}
+{{- end -}}
+{{- /* Remove trailing newlines */ -}}
