@@ -89,6 +89,7 @@ override site-wide params.
 
 | Param | Default | Description |
 |-------|---------|-------------|
+| emptyElementStyle | _(nil)_ | If ``emptyElementStyle`` is set to ``self-close`` in params (site or per-page), then empty tags produced by this module use 'self-closing' form, otherwise 'void style' _[Note 6](#note-6)_ _[Note 9](#note-9)_ |
 | internalTemplatesOverrideRobotsTXT | _true_ | Site-level params only. When true overrides the internal template for robots.txt (`robots.txt`) with one from this module _[Note 8](#note-8)_ |
 | internalTemplatesOverrideRSS | _true_ | Site-level params only. When true overrides the internal template for RSS feeds (`rss.xml`) with one from this module |
 | internalTemplatesOverrideSitemap | _true_ | Site-level params only. When true overrides the internal template for Sitemap protocol file (`sitemap.xml`) with one from this module |
@@ -97,31 +98,9 @@ override site-wide params.
 | taxCanonical | _false_ | When true includes this taxonomy or term page in the `sitemap.xml`, if applicable |
 | toCanonical | _(nil)_ | If pageCanonical is false then sets the `<link rel='canonical' href=…>` href to value of `toCanonical` |
 
-### \<head> metadata configuration
+## A note on CSS generation
 
-* If ``emptyElementStyle`` is set to ``self-close`` in params (site or per-page), then empty tags produced by this module use 'self-closing' form (see above), otherwise 'void style' (see above). _([Note 6](#note-6))_
-  For example, with ``toml`` for the site as
-
-  ```toml
-  [params]
-       emptyElementStyle = "self-close"
-  ```
-
-  you get
-
-  ```html
-      <meta name="generator" content="Hugo 0.91.2" />
-      <meta name="keywords" content="Placeholder" />
-  ```
-
-  while not configuring ``emptyElementStyle`` produces
-
-  ```html
-      <meta name="generator" content="Hugo 0.91.2">
-      <meta name="keywords" content="Placeholder">
-  ```
-
-  in the 'Test of metadata for \<head>' section of the page from ``exampleSite/docs/placeholder.md`` as the generated [/docs/placeholder/](/docs/placeholder/#test-of-metadata-for-head).
+It is expected that `layouts/partial/helpers/head/resources-pipes.html` will not be used by consumers of this module, and that instead handling for the CSS, scripts and so on will use code more suitable for the consumer's production and/or development situation.
 
 ### 'summary' metadata configuration
 
@@ -228,6 +207,33 @@ Sitemap: <your baseURL from config.toml>
 ```
 
 instead of it being omitted from `robots.txt`.
+
+### Note 9
+
+If ``emptyElementStyle`` is set to ``self-close`` in params (site or per-page), then empty tags produced by this module use 'self-closing' form (see above), otherwise 'void style' (see above). _([Note 6](#note-6))_
+
+For example, with ``toml`` for the site as
+
+```toml
+[params]
+     emptyElementStyle = "self-close"
+```
+
+you get
+
+```html
+    <meta name="generator" content="Hugo 0.91.2" />
+    <meta name="keywords" content="Placeholder" />
+```
+
+while not configuring ``emptyElementStyle`` produces
+
+```html
+    <meta name="generator" content="Hugo 0.91.2">
+    <meta name="keywords" content="Placeholder">
+```
+
+in the 'Test of metadata for \<head>' section of the page from ``exampleSite/docs/placeholder.md`` as the generated [/docs/placeholder/](/docs/placeholder/#test-of-metadata-for-head).
 
 ## Contributions welcome
 
