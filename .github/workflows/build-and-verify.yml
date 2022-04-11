@@ -75,7 +75,7 @@ jobs:
         uses: danielfdickinson/build-audit-action-hugo-dfd@v0.2
         with:
           upload-site-as: minified-site
-          use-lfs: false
+          use-lfs: true
           source-directory: exampleSite
   deploy-minified-site:
     needs:
