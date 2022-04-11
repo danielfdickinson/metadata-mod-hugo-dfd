@@ -81,6 +81,10 @@ Basic documentation for metadata-mod-hugo-dfd, a Hugo module by [Daniel F. Dicki
    hugo mod tidy
    ```
 
+## A note on CSS generation
+
+It is expected that `layouts/partial/helpers/head/resources-pipes.html` will not be used by consumers of this module, and that instead handling for the CSS, scripts and so on will use code more suitable for the consumer's production and/or development situation.
+
 ## Summary of configurable params
 
 Unless otherwise noted, params may be per-page (in frontmatter), or
@@ -97,10 +101,6 @@ override site-wide params.
 | rssIncludeMainArticle | _false_ | When true include the pages `.Content` (that is the rendered content from the page's file such as `/content/posts/a-post.md`) directly in the RSS feed instead of only a summary or description |
 | taxCanonical | _false_ | When true includes this taxonomy or term page in the `sitemap.xml`, if applicable |
 | toCanonical | _(nil)_ | If pageCanonical is false then sets the `<link rel='canonical' href=…>` href to value of `toCanonical` |
-
-## A note on CSS generation
-
-It is expected that `layouts/partial/helpers/head/resources-pipes.html` will not be used by consumers of this module, and that instead handling for the CSS, scripts and so on will use code more suitable for the consumer's production and/or development situation.
 
 ### 'summary' metadata configuration
 
