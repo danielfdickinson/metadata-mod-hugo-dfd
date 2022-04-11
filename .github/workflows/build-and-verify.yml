@@ -60,7 +60,7 @@ jobs:
       - name: "Check internal links"
         uses: danielfdickinson/link-check-action-hugo-dfd@v0.2
         with:
-          canonical-root: https://example.com/
+          canonical-root: https://metadata-mod.wildtechgarden.ca/
           download-site-as: unminified-site-latest
           entry-point: index.html
           upload-logs-as: check-links-failure
