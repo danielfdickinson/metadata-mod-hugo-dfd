@@ -1,4 +1,5 @@
 {{- $ctx := . -}}
+{{- $titleFromContent := false -}}
 {{- $foundTitle := "" -}}
 {{- with $ctx -}}
     {{- if .Title -}}
@@ -8,9 +9,9 @@
         {{- if ge (len (findRE "<h1.*?>(.|\n)*?</h1>" .Content)) 1 -}}
             {{- range (findRE "<h1.*?>(.|\n)*?</h1>" .Content 1) -}}
                 {{- $foundTitle = replaceRE "<h1.*?>((.|\n)*)?</h1>" "$1" . -}}
-                {{- $titleFromContent := true -}}
+                {{- $titleFromContent = true -}}
             {{- end -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
-{{- return $foundTitle -}}
+{{- return (dict "foundTitle" $foundTitle "titleFromContent" $titleFromContent) -}}
