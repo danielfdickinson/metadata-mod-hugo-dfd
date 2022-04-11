@@ -95,6 +95,7 @@ override site-wide params.
 | pageCanonical | _true_ | Page-level params only. When false omits this page from the `sitemap.xml`, if applicable |
 | rssIncludeMainArticle | _false_ | When true include the pages `.Content` (that is the rendered content from the page's file such as `/content/posts/a-post.md`) directly in the RSS feed instead of only a summary or description |
 | taxCanonical | _false_ | When true includes this taxonomy or term page in the `sitemap.xml`, if applicable |
+| toCanonical | _(nil)_ | If pageCanonical is false then sets the `<link rel='canonical' href=…>` href to value of `toCanonical` |
 
 ### \<head> metadata configuration
 
