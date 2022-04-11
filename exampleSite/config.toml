@@ -1,7 +1,7 @@
 # Don't forget the trailing forward slash (/)
-baseURL = "https://example.com/"
+baseURL = "https://metadata-mod.wildtechgarden.ca/"
 copyright = "© 2021-2022 Daniel F. Dickinson"
-homepage = "https://github.com/danielfdickinson/metadata-mod-hugo-dfd"
+homepage = "https://metadata-mod.wildtechgarden.ca/"
 enableGitInfo = true
 enableRobotsTXT = true
 defaultContentLanguage = "en"

@@ -6,6 +6,10 @@ Basic documentation for metadata-mod-hugo-dfd, a Hugo module by [Daniel F. Dicki
 
 [![build-and-verify](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/actions/workflows/build-and-verify.yml/badge.svg)](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/actions/workflows/build-and-verify.yml)
 
+## Demo site
+
+<https://metadata-mod.wildtechgarden.ca/>
+
 ## GitHub repository
 
 <https://github.com/danielfdickinson/metadata-mod-hugo-dfd>
