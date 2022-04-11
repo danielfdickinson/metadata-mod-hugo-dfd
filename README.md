@@ -20,7 +20,7 @@ Basic documentation for metadata-mod-hugo-dfd, a Hugo module by [Daniel F. Dicki
   * date-modified — timestamp of last time page was modified (UTC)
   * description — A page frontmatter defined description of the page with a fallback to the page summary (below)
   * description-no-fallback — Page frontmatter description of the page with no fallback
-  * keywords — Keywords for the page (generated from all terms from all taxonomies)
+  * keywords — Keywords for the page (generated from all terms from all taxonomies) _[Note 10](#note-10)_
   * locale — Language/locale in/for which page is written
   * locale-alternate — Other available languages/locales for the page
   * media-audio-file — The first (if any) audio file associated with the page _[Note 1](#note-1)_
@@ -81,10 +81,6 @@ Basic documentation for metadata-mod-hugo-dfd, a Hugo module by [Daniel F. Dicki
    hugo mod tidy
    ```
 
-## A note on CSS generation
-
-It is expected that `layouts/partial/helpers/head/resources-pipes.html` will not be used by consumers of this module, and that instead handling for the CSS, scripts and so on will use code more suitable for the consumer's production and/or development situation.
-
 ## Summary of configurable params
 
 Unless otherwise noted, params may be per-page (in frontmatter), or
@@ -93,72 +89,92 @@ override site-wide params.
 
 | Param | Default | Description |
 |-------|---------|-------------|
+| datesPreserveTimezone | _false_ | If `true` in page or site params, then the timezone of the date is not adjusted. If this is not the case, all dates are converted to UTC. You can of course use `.Local` or other date functions to adjust the output of the resulting date. |
+| description | _(nil)_ | If present acts as the the `description` metadata (see [Features](#features) above). _[Note 17](#note-17)_ |
 | emptyElementStyle | _(nil)_ | If ``emptyElementStyle`` is set to ``self-close`` in params (site or per-page), then empty tags produced by this module use 'self-closing' form, otherwise 'void style' _[Note 6](#note-6)_ _[Note 9](#note-9)_ |
 | internalTemplatesOverrideRobotsTXT | _true_ | Site-level params only. When true overrides the internal template for robots.txt (`robots.txt`) with one from this module _[Note 8](#note-8)_ |
 | internalTemplatesOverrideRSS | _true_ | Site-level params only. When true overrides the internal template for RSS feeds (`rss.xml`) with one from this module |
 | internalTemplatesOverrideSitemap | _true_ | Site-level params only. When true overrides the internal template for Sitemap protocol file (`sitemap.xml`) with one from this module |
+| metadataNumSeeAlso | 10 | Number of related pages to return as the `see-also` metadata |
+| microformatsEnable | _true_ | If true pull in the `facebook`, `opengraph`, `schema`, and `twitter_cards` microformats into `<head>` _[Note 11](#note-11)_ |
+| microformatsOpenGraphEnable | _true_ | If true add the `opengraph.html` microformat to `<head>` _[Note 13](#note-13)_ |
+| microformatsSchemaEnable | _true_ | If true add the `schema.html` microformat to `<head>` _[Note 14](#note-14)_ |
+| microformatsTwitterCardEnable | _true_ | If true add `twitter_cards.html` microformat to `<head>` _[Note 15](#note-15)_ |
+| multipleH1ErrorIgnore | _true_ | If false and there would be multiple `<h1>` elements on a page, error the build _[Note 19](#note-19)_ |
+| multipleH1ErrorFix | _false_ | If true and there would be multiple `<h1>` elements on a page, make all but the first an `<h2>` _[Note 19](#note-19)_ |
+| multipleH1ErrorWarn | _true_ | If true and there would be multiple `<h1>` elements on a page,  _[Note 19](#note-19)_ |
+| openGraphType | _(nil)_ | If set overrides the default type used for Open Graph microformat `og:type` meta tag _[Note 16](#note-16)_ |
 | pageCanonical | _true_ | Page-level params only. When false omits this page from the `sitemap.xml`, if applicable |
 | rssIncludeMainArticle | _false_ | When true include the pages `.Content` (that is the rendered content from the page's file such as `/content/posts/a-post.md`) directly in the RSS feed instead of only a summary or description |
+| summary | _(nil)_ | If present acts as the `summary` metadata. _[Note 18](#note-18)_ |
+| summaryPreserveHTML | _false_ | When true preserves any HTML in the Summary _[Note 18](#note-18)_ |
+| summaryRenderMarkdown | _true_ | When true render any Markdown in the Summary _[Note 18](#note-18)_ |
+| tags | _(nil)_ | Should be an array of tags associated with the page. Often also rendered on the page and/or listings by themes. By default is a [Taxonomy](https://gohugo.io/content-management/taxonomies) |
 | taxCanonical | _false_ | When true includes this taxonomy or term page in the `sitemap.xml`, if applicable |
+| title | _(nil)_ | Page param. When present is the title of the page. _[Note 20](#note-20)_ |
+| title | _(nil)_ | Site configuration. When present is the title of the website. _[Note 21](#note-21)_ |
 | toCanonical | _(nil)_ | If pageCanonical is false then sets the `<link rel='canonical' href=…>` href to value of `toCanonical` |
 
-### 'summary' metadata configuration
+## A note on `<head>` generation
 
-* If ``summaryRenderMarkdown`` is true in Params (site or per-page) then we allow setting a summary in the frontmatter that contains markdown, which we render.
-* If ``summaryPreserveHtml`` is true in Params (site or per-page) then we return a summary that will render any contained HTML. Note that HTML is only preserved using the manual split method of generating a summary (that is using ``<!--more-->`` as described in [the Hugo docs for Content Summaries](https://gohugo.io/content-management/summaries)), or we rendered Markdown (above).
-* Also note that if you render markdown but don't preserve HTML the generated HTML is converted to plain text (i.e. will have no formatting).
+This theme includes a number of 'helper' partials under `layouts/partials/helpers/head` (called via `{{ partial "helpers/head/<name-of-partial>.html" }}`) which are intended to assist in populating the contents of the `<head>` element on your page.
 
-### Notes on 'description' metadata item
+An example generation of `<head>` using these helpers can be found in the exampleSite source code under `/layouts/partials/head.html` (which is in turn called by the theme's `layouts/_default/baseof.html`).
 
-* For a page (including sections, taxonomies, and terms, but not the home page): Uses ``.Description`` if present, otherwise defaults to the summary (if present).
-  * For the found description: Turn into plain text, replace newlines and carriage-returns with spaces, and condense all multiple space sequences to single spaces.
-* For the home page: defaults to ``.Description`` if present, otherwise the home page frontmatter description, otherwise the site ``.Description``, otherwise summary from ``.Site.Params``
-  * For the found description: Render markdown if present, turn into plain text, replace newlines and carriage-returns with spaces, then condense all multiple space sequences to single spaces.
+### A note on CSS generation
+
+It is expected that `layouts/partial/helpers/head/resources-pipes.html` will not be used by consumers of this module, and that instead handling for the CSS, scripts and so on will use code more suitable for the consumer's production and/or development situation.
+
+### A note on metadata generation
+
+In general metadata can be gathered and accessed by consumers of the module by issuing a partial call such as
+
+``{{- $metadataGathered := partial "helpers/return-metadata" ( dict "page" .Page "requestedData" (slice "description" "keywords") ) -}}``
+
+Where `description` and `keywords` _[Note 10](#note-10)_ are the metadata types we are gathering (see [Features](#features) for the list of metadata gathered by this module).
+
+Then to use the description (for example):
+
+```html
+{{- with $metadataGathered.description }}
+    <meta name="description" content="{{ . }}">
+{{- end -}}
+```
+
+or
+
+```html
+{{- with (index $metadataGathered "description") }}
+    <meta name="description" content="{{ . }}">
+{{- end -}}
+
+```
+
+The `layouts/partials/helpers/head/metadata.html` in this theme gathers and directly adds to `<head>` description and keywords metadata _[Note 10](#note-10)_. In addition it adds the `generator` meta tag (using the command `hugo.Generator`) and also pulls in `layouts/partials/helpers/head/microformats.html` (see below).
 
 ### Notes on Date, Expiry, PublishDate, Lastmod
 
-(dateCreated, dateExpired, datePublished, and dateModified) metadata items
+`date-created`, `date-expired`, `date-published`, and `date-modified` metadata items
 
-* For pages that do no exist in the ``content`` directory (e.g. taxonomies, terms, subdirectories/sections with no '_index.md' or 'index.md' and/or a homepage with no '_index.md' in 'content'), then Hugo's ``.PublishDate`` (Open Graph name 'article:published_time') is .IsZero, treated as false or not present depending on the method of use. This is true even with the ``config.toml`` ``[frontmatter]`` ``publishDate`` configured.
-* With this exception, [the preferences for automatic values for the various date .Page variables can be configured using the ``frontmatter`` section on your Hugo config](https://gohugo.io/getting-started/configuration/#configure-dates).
-* In this module, if ``datesPreserveTimezone`` is ``true`` in page or site ``Params``, then the timezone of the date is not adjusted. If this is not the case, all dates are converted to UTC. You can of course use ``.Local`` or other date functions to adjust the output of the date variables.
-* Not all themes are consistent in treating ``.Date`` as 'dateCreated' even though Hugo's internal templates (like RSS feed generator) have that expectation. I'd recommend modifying the theme's date handling if this is the case.
+* For pages that do no exist in the `content` directory (e.g. taxonomies, terms, subdirectories/sections with no '_index.md' or 'index.md' and/or a homepage with no '_index.md' in 'content'), then Hugo's `.PublishDate` (Open Graph name 'article:published_time') is .IsZero, treated as false or not present depending on the method of use. This is true even with the `config.toml` `[frontmatter]` `publishDate` configured.
+* With this exception, [the preferences for automatic values for the various date .Page variables can be configured using the `frontmatter` section in your Hugo config](https://gohugo.io/getting-started/configuration/#configure-dates).
+* Not all themes are consistent in treating `.Date` as 'dateCreated' even though Hugo's internal templates (like RSS feed generator) have that expectation. I'd recommend modifying the theme's date handling if this is the case.
+* See also `datesPreserveTimezone` param (above)
 
-### Taxonomies and 'keywords' \<head> metadata
+## Contributions welcome
 
-* For all pages except the homepage, any taxonomy terms (but not taxonomies themselves; so not 'tags' and 'categories' for the default taxonomies configuration, but the terms you specify under 'tags' and/or under 'categories' in page frontmatter) in the page frontmatter are used to fill in the 'keywords' \<meta> tag.
-* For the homepage all taxonomy terms (but not taxonomies) are used to fill in the 'keywords' \<meta> tag.
-* The 'keywords' meta tag uses a comma separated list of terms, with no space added before or after the comma, as a flat string as [defined in the HTML5 spec](https://html.spec.whatwg.org/multipage/semantics.html#standard-metadata-names).
-* Note that the 'keywords' meta tag will likely not be used by search engines due to historical misuse of this tag to mislead naive processors.
+If [your issue can't be found when searching both open and closed issues](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/issues?q=is%3Aissue), please add it!
 
-### 'type' metadata
+Please [check open issues on danielfdickinson/metadata-mod-hugo-dfd](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/issues)
+for enhancements and bugs that you would like resolved, write the fix, and submit a PR!
 
-* Refers to the item type for feeds and Open Graph Protocol. We only use 'website' and 'article'. The homepage is of 'type' 'website' and other pages with a 'publishDate' (that is, all pages which exist under ``content`` and have frontmatter) are considered of type 'article'.
-* This can by overridden by a frontmatter ``openGraphType`` in the page-level ``Params``. See [Object Types in the Open Graph Protocol](https://ogp.me/#types).
+Adding and improving documention is always handy as well.
 
-### 'name'/title discovery and use
+## Support and general questions
 
-* Uses the following order of preference for discovering title:
-  1. ``title`` frontmatter (that is, ``.Page.Title``)
-  2. The contents of the first H1 element (if there is at least one)
-  3. Either:
-     1. For the home page the Site Title
-     2. For any other page which has a content file, the ``ContentBaseName``
-  4. If not title has been found to this point, the title is 'Untitled'.
-* If a non-content title was found and there are one or more H1 elements in the content, use the fix, warn, or error logic (below).
-* If a content title was found and there are more than one H1 elements in the content, use fix, warn, or error logic (below).
-* In the event of H1 issues:
-  1. If site or per-page ``fixMultipleH1Error`` is not false do nothing; indicates that the content handling logic fixes up the H1 issues.
-  2. Otherwise, if ``warnMultipleH1Error``, emit a build warning if there are H1 issues.
-  3. Finally, if ``ignoreMultipleH1Error`` is not true, fatally error the build on H1 issues.
+Please use [GitHub Discussions](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/discussions) for support and general questions.
 
-### 'siteName'/site title discovery and use
-
-* Uses the following order of preference for discovering site title:
-  1. ``title`` configuration item for the site (or language-specific site)
-  2. ``.Site.Params.Title``
-  3. Try steps 1 and 2 for the 'name'/Title of the homepage
-  4. If not title found in 1-3, use a title of 'Untitled Site'
+--------
 
 ## End notes
 
@@ -235,15 +251,91 @@ while not configuring ``emptyElementStyle`` produces
 
 in the 'Test of metadata for \<head>' section of the page from ``exampleSite/docs/placeholder.md`` as the generated [/docs/placeholder/](/docs/placeholder/#test-of-metadata-for-head).
 
-## Contributions welcome
+### Note 10
 
-If [your issue can't be found when searching both open and closed issues](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/issues?q=is%3Aissue), please add it!
+* For all pages except the homepage, any taxonomy terms (but not taxonomies themselves; so not 'tags' and 'categories' for the default taxonomies configuration, but the terms you specify under 'tags' and/or under 'categories' in page frontmatter) in the page frontmatter are used to fill in the 'keywords' \<meta> tag.
+* For the homepage all taxonomy terms (but not taxonomies) are used to fill in the 'keywords' \<meta> tag.
+* The 'keywords' meta tag uses a comma separated list of terms, with no space added before or after the comma, as a flat string as [defined in the HTML5 spec](https://html.spec.whatwg.org/multipage/semantics.html#standard-metadata-names).
+* Note that the 'keywords' meta tag will likely not be used by search engines due to historical misuse of this tag to mislead naive processors.
 
-Please [check open issues on danielfdickinson/metadata-mod-hugo-dfd](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/issues)
-for enhancements and bugs that you would like resolved, write the fix, and submit a PR!
+### Note 11
 
-Adding and improving documention is always handy as well.
+The `layouts/partials/helpers/head/microformats.html` in this theme is wrapped in a check for a page or site-level `microformatsEnable` param which defaults true and pulls in `layouts/partials/lib-output/microformats/<microformat_type>` where `<microformat_type>` are each the following four types:
 
-## Support and general questions
+* facebook.html _[Note 12](#note-12)_
+* opengraph.html _[Note 13](#note-13)_
+* schema.html _[Note 14](#note-14)_
+* twitter_cards.html _[Note 15](#note-15)_
 
-Please use [GitHub Discussions](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/discussions) for support and general questions.
+### Note 12
+
+#### Facebook microformat
+
+This is only used if `.Site.Social.facebook_admin` is defined (via the `[social]` configuration option in `config.toml`).
+
+### Note 13
+
+#### Open Graph microformat
+
+This outputs [Open Graph protocol](https://ogp.me/) microformat meta tags. There are too many to list here, so for details see [`layouts/partials/helpers/lib-output/microformats/opengraph.html` in the source](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/blob/main/layouts/partials/helpers/lib-output/microformats/opengraph.html).
+
+### Note 14
+
+#### Schema microformat
+
+This outputs a limited subset of [Schema](https://schema.org/) microformat meta tags. There are too many to list here, so for details see [`layouts/partials/helpers/lib-output/microformats/schema.html` in the source](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/blob/main/layouts/partials/helpers/lib-output/microformats/schema.html).
+
+### Note 15
+
+#### Twitter cards microformat
+
+This outputs [Twitter Card](https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started/) microformat meta tags. There are too many to list here, so for details see [`layouts/partials/helpers/lib-output/microformats/schema.html` in the source](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/blob/main/layouts/partials/helpers/lib-output/microformats/twitter_cards.html).
+
+### Note 16
+
+Open Graph `type` (`og:type` meta tag) defaults to article for most pages except the home page or pages with no `PublishDate` is `article`. For the exceptions the the default is type `website`. See [Object Types in the Open Graph Protocol](https://ogp.me/#types).
+
+### Note 17
+
+* For a page (including sections, taxonomies, and terms, but not the home page): Uses ``.Description`` if present, otherwise defaults to the summary (if present).
+  * For the found description: Turn into plain text, replace newlines and carriage-returns with spaces, and condense all multiple space sequences to single spaces.
+* For the home page: defaults to ``.Description`` if present, otherwise the home page frontmatter description, otherwise the site ``.Description``, otherwise summary from ``.Site.Params``
+  * For the found description: Render markdown if present, turn into plain text, replace newlines and carriage-returns with spaces, then condense all multiple space sequences to single spaces.
+  * `description-no-fallback` follows the same logic except does not default to summary (instead defaults to the empty string)
+
+### Note 18
+
+* If ``summaryRenderMarkdown`` is true in Params (site or per-page) then we allow setting a summary in the frontmatter that contains Markdown, which we render.
+* If ``summaryPreserveHtml`` is true in Params (site or per-page) then we return a summary that will render any contained HTML. Note that HTML is only preserved using the manual split method of generating a summary (that is using ``<!--more-->`` as described in [the Hugo docs for Content Summaries](https://gohugo.io/content-management/summaries)), or when we render Markdown (above).
+* Also note that if you render Markdown but don't preserve HTML the generated HTML is converted to plain text (i.e. will have no formatting).
+
+### Note 19
+
+* In the event of H1 issues:
+  1. If site or per-page ``multipleH1ErrorFix`` is not false do nothing; indicates that the content handling logic fixes up the H1 issues.
+  2. Otherwise, if ``multipleH1ErrorWarn``, emit a build warning if there are H1 issues.
+  3. Finally, if ``multipleH1ErrorIgnore`` is not true, fatally error the build on H1 issues.
+
+### Note 20
+
+#### Page title (`name`/`title`/`title-page`) discovery and use
+
+* Uses the following order of preference for discovering title:
+  1. ``title`` frontmatter (that is, ``.Page.Title``)
+  2. The contents of the first H1 element (if there is at least one)
+  3. Either:
+     1. For the home page the Site Title
+     2. For any other page which has a content file, the ``ContentBaseName``
+  4. If not title has been found to this point, the title is 'Untitled'.
+* If a non-content title was found and there are one or more H1 elements in the content, use the fix, warn, or error logic _[Note 19](#note-19)_.
+* If a content title was found and there are more than one H1 elements in the content, use fix, warn, or error logic _[Note 19](#note-19)_.
+
+### Note 21
+
+#### Site title (`site_name`/`title-site`) title discovery and use
+
+* Uses the following order of preference for discovering site title:
+  1. ``title`` configuration item for the site (or language-specific site) [Hugo Docs for Multilingual](https://gohugo.io/content-management/multilingual/#configure-languages) and [Hugo Docs for Site Config](https://gohugo.io/getting-started/configuration/#title)
+  2. ``.Site.Params.Title``
+  3. Try steps 1 and 2 for the 'name'/Title of the homepage
+  4. If not title found in 1-3, use a title of 'Untitled Site'
