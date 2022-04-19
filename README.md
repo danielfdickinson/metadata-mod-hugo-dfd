@@ -253,7 +253,7 @@ while not configuring ``emptyElementStyle`` produces
     <meta name="keywords" content="Placeholder">
 ```
 
-in the 'Test of metadata for \<head>' section of the page from ``exampleSite/docs/placeholder.md`` as the generated [/docs/placeholder/](/docs/placeholder/#test-of-metadata-for-head).
+in the 'Test of metadata for \<head>' section of the page from `exampleSite/docs/placeholder.md` as the generated `/docs/placeholder`.
 
 ### Note 10
 
