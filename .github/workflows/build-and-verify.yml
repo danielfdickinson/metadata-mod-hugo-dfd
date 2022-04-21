@@ -14,6 +14,10 @@ on:
     branches:
       - main
       - 'v[0-9]*'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
 jobs:
   check-source-code-validity:
     runs-on: ubuntu-20.04
