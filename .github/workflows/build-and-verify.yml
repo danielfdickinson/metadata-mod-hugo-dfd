@@ -44,7 +44,7 @@ jobs:
         uses: danielfdickinson/build-audit-action-hugo-dfd@main
         with:
           hugo-version: ${{ matrix.hugo }}
-          upload-site-as: unminified-site-${{ matrix.hugo }}-${{ matrix.images}
+          upload-site-as: unminified-site-${{ matrix.hugo }}-${{ matrix.images}}
           use-lfs: true
           source-directory: exampleSite-${{ matrix.images }}
   validate-unminified-html:
