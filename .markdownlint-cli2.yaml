@@ -7,4 +7,4 @@ config:
         code_blocks: false
         tables: false
 ignores:
-    - exampleSite/content/post/_index.md
+    - exampleSite-*/content/post/_index.md
