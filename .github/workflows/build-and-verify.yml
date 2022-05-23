@@ -30,42 +30,49 @@ jobs:
             README.md
             exampleSite/content/*/*.md
             exampleSite/content/**/*.md
+            exampleSite-no-images/content/*/*.md
+            exampleSite-no-images/content/**/*.md
   build-unminified-site:
     needs: check-source-code-validity
     runs-on: ubuntu-20.04
     strategy:
       matrix:
         hugo: ["0.80.0", "0.88.1", "latest"]
+        images: ["images", "no-images"]
     steps:
       - name: "Build Site with Hugo and Audit"
         uses: danielfdickinson/build-audit-action-hugo-dfd@main
         with:
           hugo-version: ${{ matrix.hugo }}
-          upload-site-as: unminified-site-${{ matrix.hugo }}
+          upload-site-as: unminified-site-${{ matrix.hugo }}-${{ matrix.images}
           use-lfs: true
-          source-directory: exampleSite
+          source-directory: exampleSite-${{ matrix.images }}
   validate-unminified-html:
     needs: build-unminified-site
     runs-on: ubuntu-20.04
     strategy:
       matrix:
         hugo: ["0.80.0", "0.88.1", "latest"]
+        images: ["images", "no-images"]
     steps:
       - uses: actions/checkout@v3
       - name: "Validate exampleSite HTML"
         uses: danielfdickinson/validate-html-action-hugo-dfd@v0.2
         with:
-          download-site-as: unminified-site-${{ matrix.hugo }}
+          download-site-as: unminified-site-${{ matrix.hugo }}-${{ matrix.images }}
   check-links:
     needs: build-unminified-site
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        images: ["images", "no-images"]
     steps:
       - uses: actions/checkout@v3
       - name: "Check internal links"
         uses: danielfdickinson/link-check-action-hugo-dfd@v0.2
         with:
           canonical-root: https://metadata-mod.wildtechgarden.ca/
-          download-site-as: unminified-site-latest
+          download-site-as: unminified-site-latest-${{ matrix.images }}
           entry-point: index.html
           upload-logs-as: check-links-failure
           upload-logs-retention: 3
@@ -80,7 +87,7 @@ jobs:
         with:
           upload-site-as: minified-site
           use-lfs: true
-          source-directory: exampleSite
+          source-directory: exampleSite-images
   deploy-minified-site:
     needs:
       - build-minified-site
