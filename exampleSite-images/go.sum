@@ -1,6 +1,6 @@
-github.com/danielfdickinson/image-handling-mod-hugo-dfd v0.4.2-0.20220712181613-4cc95e252833 h1:MD4vmE6NchRN4fQWcOAUfd5OBTMlym9DBjgF8IlCVB4=
-github.com/danielfdickinson/image-handling-mod-hugo-dfd v0.4.2-0.20220712181613-4cc95e252833/go.mod h1:r2HhhIAUbD/hO0YgvRhIoZsvE096nWD9mdcSz4Oa25c=
-github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.3.2-0.20220712180227-8a2acebcdcf8 h1:YfJCnjkSVzURRhuV/S07Vy2p6ck4ujLml3wzZTlM1Kg=
-github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.3.2-0.20220712180227-8a2acebcdcf8/go.mod h1:inb1U/NMQWMjoDBEhpabB/cI06SkgWnbM4dHKFHCG60=
+github.com/danielfdickinson/image-handling-mod-hugo-dfd v0.4.2 h1:MtiCdpGxGWy36J6JokMXY0EYrVO5EaNHBqpKBcPlQE0=
+github.com/danielfdickinson/image-handling-mod-hugo-dfd v0.4.2/go.mod h1:h+vNqbDFVmrcnlUq1GsWtKS3HWw7wLDqM1PahGQjSOY=
+github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.3.2 h1:hRLX/qaBWrGAIGTRFnG2vTygF3LIZDIDCJI7Az962kc=
+github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.3.2/go.mod h1:ajYr1qZHU5FJloKLT9rF8jSzKhuv5uSzQ/kA5M1vsY8=
 github.com/danielfdickinson/minimal-test-theme-hugo-dfd v0.3.5 h1:Zovvdh+bwx6GiNjaXzBo6MtGg8kEjri2CpMAg3NJ4nw=
 github.com/danielfdickinson/minimal-test-theme-hugo-dfd v0.3.5/go.mod h1:yu/RUtbx29O/vvbthJjLqXXu7cdE/e8XZ3rVvh+01BM=
