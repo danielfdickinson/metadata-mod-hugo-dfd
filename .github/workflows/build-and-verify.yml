@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        hugo: ["0.80.0", "0.88.1", "latest"]
+        hugo: ["0.80.0", "0.88.1", "0.96.0", "latest"]
         images: ["images", "no-images"]
     steps:
       - name: "Build Site with Hugo and Audit"
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        hugo: ["0.80.0", "0.88.1", "latest"]
+        hugo: ["0.80.0", "0.88.1", "0.96.0", "latest"]
         images: ["images", "no-images"]
     steps:
       - uses: actions/checkout@v3
