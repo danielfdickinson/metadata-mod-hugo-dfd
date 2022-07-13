@@ -1,6 +1,6 @@
 module github.com/danielfdickinson/hmetadata-mod-hugo-dfd/exampleSite
 
-go 1.17
+go 1.15
 
 require (
 	github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.3.2-0.20220712180227-8a2acebcdcf8 // indirect

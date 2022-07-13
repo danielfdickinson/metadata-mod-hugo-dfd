@@ -1,6 +1,6 @@
 module github.com/danielfdickinson/hmetadata-mod-hugo-dfd/exampleSite
 
-go 1.17
+go 1.15
 
 require (
 	github.com/danielfdickinson/image-handling-mod-hugo-dfd v0.4.2-0.20220712181613-4cc95e252833 // indirect
