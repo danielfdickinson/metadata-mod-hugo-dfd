@@ -1,6 +1,6 @@
 # DFD Hugo module for metadata for `.Page`
 
-Basic documentation for metadata-mod-hugo-dfd, a Hugo module by [Daniel F. Dickinson](https://github.com/danielfdickinson) for handling page metadata intended to be used in generating the 'head' section, as well as used in page elements.
+Basic documentation for metadata-mod-hugo-dfd, a Hugo module by [Daniel F. Dickinson](https://wildtechgarden.ca/about/) for handling page metadata intended to be used in generating the 'head' section, as well as used in page elements.
 
 ## Status
 
