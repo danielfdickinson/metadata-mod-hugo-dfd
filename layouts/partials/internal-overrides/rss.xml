@@ -1,17 +1,9 @@
 {{- /* Modified from Hugo internal template at https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/_default/rss.xml */ -}}
 {{- $pctx := . -}}
 {{- $page_metadata := partial "helpers/return-metadata" (dict "page" .Page "requestedData" (slice "title-page" "title-site")) -}}
-{{- $pages := slice -}}
+{{- $pages := partial "internal-overrides/rss-pages.xml" . -}}
 {{- if .IsHome -}}
     {{- $pctx = .Site -}}
-    {{- $pages = where (where (where .Site.Pages "Section" "in" site.Params.mainSections) "Parent.Kind" "ne" "home") "Parent.Parent.Kind" "ne" "section" -}}
-{{- else if $.IsSection -}}
-    {{- $pages = where $pctx.Pages "Parent.Kind" "ne" "home" -}}
-    {{- with $pages -}}
-        {{- $pages = where $pages "Parent.Parent.Kind" "ne" "section" -}}
-    {{- end -}}
-{{- else -}}
-    {{- $pages = $pctx.Pages -}}
 {{- end -}}
 {{- $pages = (($pages.ByWeight).ByPublishDate).Reverse }}
 {{- $limit := .Site.Config.Services.RSS.Limit -}}
@@ -51,34 +43,37 @@
         {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
         {{- end -}}
         {{ range $pages -}}
-            {{- $item_page_metadata := partial "helpers/return-metadata" (dict "page" .Page "requestedData" (slice "title-page" "title-site" "description-no-fallback" "summary")) }}
-        <item>
-            <title>{{ index $item_page_metadata "title-page" }}</title>
-            <link>{{ .Permalink }}</link>
-            {{- with .PublishDate }}
-            <pubDate>{{ .Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
-            {{- else -}}
-            <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
-            {{- end -}}
-            {{- /* TODO: Add ability to have multiple authors */ -}}
-            {{- if or (not .Params.author) (eq .Params.author .Site.Author.name) -}}
-            {{- with .Site.Author.email }}
-            <author>{{ . }}{{ with $.Site.Author.name }} ({{ . }}){{ end }}</author>
-            {{- end -}}
-            {{- end }}
-            <guid>{{ .Permalink }}</guid>
-            <description>
-            {{- if (.Params.rssIncludeMainArticle | default .Site.Params.rssIncludeMainArticle | default false) -}}
-                {{- .Content | strings.TrimLeft "\n\t " | strings.TrimRight "\n\t " -}}
-            {{- else -}}
-                {{- with (index $item_page_metadata "summary") -}}
-                    {{- . | plainify | strings.TrimLeft " " | strings.TrimRight "\n\t " -}}
+            {{- $pageCanonical := .Params.includeInRSS | default .Params.pageCanonical | default site.Params.pageCanonical | default true -}}
+            {{- if $pageCanonical -}}
+                {{- $item_page_metadata := partial "helpers/return-metadata" (dict "page" .Page "requestedData" (slice "title-page" "title-site" "description-no-fallback" "summary")) }}
+            <item>
+                <title>{{ index $item_page_metadata "title-page" }}</title>
+                <link>{{ .Permalink }}</link>
+                {{- with .PublishDate }}
+                <pubDate>{{ .Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
                 {{- else -}}
-                    {{- index $item_page_metadata "description-no-fallback" | strings.TrimLeft " " | strings.TrimRight "\n\t " -}}
+                <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
                 {{- end -}}
+                {{- /* TODO: Add ability to have multiple authors */ -}}
+                {{- if or (not .Params.author) (eq .Params.author .Site.Author.name) -}}
+                {{- with .Site.Author.email }}
+                <author>{{ . }}{{ with $.Site.Author.name }} ({{ . }}){{ end }}</author>
+                {{- end -}}
+                {{- end }}
+                <guid>{{ .Permalink }}</guid>
+                <description>
+                {{- if (.Params.rssIncludeMainArticle | default .Site.Params.rssIncludeMainArticle | default false) -}}
+                    {{- .Content | strings.TrimLeft "\n\t " | strings.TrimRight "\n\t " -}}
+                {{- else -}}
+                    {{- with (index $item_page_metadata "summary") -}}
+                        {{- . | plainify | strings.TrimLeft " " | strings.TrimRight "\n\t " -}}
+                    {{- else -}}
+                        {{- index $item_page_metadata "description-no-fallback" | strings.TrimLeft " " | strings.TrimRight "\n\t " -}}
+                    {{- end -}}
+                {{- end -}}
+                </description>
+            </item>
             {{- end -}}
-            </description>
-        </item>
         {{- end }}
     </channel>
 </rss>

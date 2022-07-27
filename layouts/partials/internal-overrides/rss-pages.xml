@@ -1,0 +1,22 @@
+{{- $pctx := . -}}
+{{- $pages := slice -}}
+{{- if .IsHome -}}
+    {{- $pctx = .Site -}}
+    {{- range site.Home.Sections -}}
+        {{- $pages = $pages | append (where .RegularPages "Params.omitFromList" "ne" true) -}}
+        {{- $pages = $pages | append (where (where .Sections "Params.omitFromList" "ne" true) "Params.layout" "eq" "list-content") -}}
+        {{- range .Sections -}}
+            {{- $pages = $pages | append (partial "internal-overrides/rss-pages.xml" .) -}}
+        {{- end -}}
+    {{- end -}}
+{{- else if .IsSection -}}
+    {{- $pages = $pages | append (where .RegularPages "Params.omitFromList" "ne" true) -}}
+    {{- $pages = $pages | append (where (where .Sections "Params.omitFromList" "ne" true) "Params.layout" "eq" "list-content") -}}
+    {{- range .Sections -}}
+        {{- $pages = $pages | append (partial "internal-overrides/rss-pages.xml" .) -}}
+    {{- end -}}
+{{- else -}}
+    {{- $pages = $pctx.Pages -}}
+{{- end -}}
+{{- return $pages -}}
+{{- /* Remove trailing newlines */ -}}
