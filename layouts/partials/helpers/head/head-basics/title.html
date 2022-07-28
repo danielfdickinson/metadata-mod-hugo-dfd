@@ -1,14 +1,6 @@
 {{- $page_title_metadata := partial "helpers/return-metadata" (dict "page" .Page "requestedData" (slice "title-page" "title-site")) }}
     <title>
-{{- if not .Data.Singular -}}
-        {{- index $page_title_metadata "title-page" }}
-        {{- if lt (len ((printf "%s | %s" (index $page_title_metadata "title-page") (index $page_title_metadata "title-site")) | htmlEscape)) 70 }} | {{ index $page_title_metadata "title-site" -}}{{ end -}}
-{{- else if not .Data.Terms -}}
-        {{ .Data.Singular | humanize }}: {{ index $page_title_metadata "title-page" }}
-        {{- if lt (len ((printf "%s: %s | %s" (.Data.Singular | humanize) (index $page_title_metadata "title-page") (index $page_title_metadata "title-site")) | htmlEscape)) 70 }} | {{ index $page_title_metadata "title-site" -}}{{ end -}}
-{{- else -}}
-        {{- index $page_title_metadata "title-page" }}
-        {{- if lt (len ((printf "%s: %s | %s" (.Data.Singular | humanize) (index $page_title_metadata "title-page") (index $page_title_metadata "title-site")) | htmlEscape)) 70 }} | {{ index $page_title_metadata "title-site" -}}{{ end -}}
-{{- end -}}
+    {{- index $page_title_metadata "title-page" }}
+    {{- if lt (len ((printf "%s | %s" (index $page_title_metadata "title-page") (index $page_title_metadata "title-site")) | htmlEscape)) 70 }} | {{ index $page_title_metadata "title-site" -}}{{ end -}}
     </title>
 {{- /* Remove trailing newlines */ -}}

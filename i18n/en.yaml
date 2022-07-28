@@ -3,3 +3,13 @@
 
 - id: untitledSite
   translation: Untitled Site
+
+- id: taxonomy-list-description
+  translation: "Pages that utilize the taxonomy term '{{ . }}'"
+
+- id: taxonomy-term-description
+  translation: "Terms for the '{{ . }}' taxonomy"
+
+- id: taxonomyTitle
+  translation: "Taxonomy"
+

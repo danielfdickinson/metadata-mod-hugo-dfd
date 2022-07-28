@@ -7,16 +7,17 @@
         {{ with (partial "helpers/lib/metadata/gather-title-site" .) -}}
             {{- $foundTitle = . -}}
         {{- end -}}
-    {{- else if .File -}}
-        {{- if .File.ContentBaseName -}}
-            {{- if .IsSection -}}
-                {{- $foundTitle = .File.ContentBaseName | humanize | pluralize | title -}}
-            {{- else -}}
-                {{- $foundTitle = .File.ContentBaseName | humanize | title -}}
-            {{- end -}}
-        {{- end -}}
     {{- else -}}
-        {{- $foundTitle = i18n "untitled" -}}
+        {{- $foundTitle = path.Base .TranslationKey -}}
+        {{- if $foundTitle -}}
+            {{- if .IsSection -}}
+                {{- $foundTitle = $foundTitle | humanize | pluralize -}}
+            {{- else -}}
+                {{- $foundTitle = $foundTitle | humanize -}}
+            {{- end -}}
+        {{- else -}}
+            {{- $foundTitle = i18n "untitled" -}}
+        {{- end -}}
     {{- end -}}
 {{- end -}}
 {{- if $foundTitle -}}
@@ -37,5 +38,15 @@
         {{- end -}}
     {{- end -}}
 {{- end -}}
+{{- if or .Data.Singular .Data.Terms -}}
+    {{- if or (not (isset .Page.Params "title")) (not .File) -}}
+        {{- if not .Data.Terms -}}
+            {{- $foundTitle = printf "%s: %s" (.Data.Singular | humanize) ($foundTitle | humanize) -}}
+        {{- else -}}
+            {{- $foundTitle = printf "%s: %s" (i18n "taxonomyTitle" | default "Taxonomy") (.Data.Singular | humanize) -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
 {{- return $foundTitle -}}
 {{- /* Remove trailing newlines */ -}}
+
