@@ -5,4 +5,3 @@ This is a demo of a page with no frontmatter (although frontmatter with no title
 Note that this demo site does not modify the minimal theme on which it is based,
 so the title from the Markdown (originally an \<h1>) appears both as the site title
 and as the first \<h2> on the page.
-
