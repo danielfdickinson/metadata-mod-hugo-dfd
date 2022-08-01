@@ -293,7 +293,7 @@ This outputs a limited subset of [Schema](https://schema.org/) microformat meta 
 
 #### Twitter cards microformat
 
-This outputs [Twitter Card](https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started/) microformat meta tags. There are too many to list here, so for details see [`layouts/partials/helpers/lib-output/microformats/schema.html` in the source](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/blob/main/layouts/partials/helpers/lib-output/microformats/twitter_cards.html).
+This outputs [Twitter Card](https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started) microformat meta tags. There are too many to list here, so for details see [`layouts/partials/helpers/lib-output/microformats/schema.html` in the source](https://github.com/danielfdickinson/metadata-mod-hugo-dfd/blob/main/layouts/partials/helpers/lib-output/microformats/twitter_cards.html).
 
 ### Note 16
 
