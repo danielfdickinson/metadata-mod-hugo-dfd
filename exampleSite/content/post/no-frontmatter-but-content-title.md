@@ -2,4 +2,7 @@
 
 This is a demo of a page with no frontmatter (although frontmatter with no title would also work for this test) but with an H1 heading which we use as the page title (name).
 
-Note that on this site this only affects the metadata in the footer of this page since we don't modify the test theme to use this metadata (since we want to avoid a circular dependency, along with other considerations).
+Note that this demo site does not modify the minimal theme on which it is based,
+so the title from the Markdown (originally an \<h1>) appears both as the site title
+and as the first \<h2> on the page.
+
