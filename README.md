@@ -46,7 +46,7 @@ Basic documentation for metadata-mod-hugo-dfd, a Hugo module by [Daniel F. Dicki
   * word-count — Estimated number of words in the main page content
 * Has a unified and comprehensive means of finding page and site titles.
 * For \<head> metadata, supports either self-closing or 'void style' empty tags _[Note 6](#note-6)_
-* Partials are 'shortcode safe' (which means they can work from layouts or shortcodes).
+* Partials in the `helpers` directory are 'shortcode safe' (which means they can work from layouts or shortcodes). Does not include subdirectories of `helpers`.
 * Logic for finding images for use by Open Graph and Twitter cards
 * Featured/cover images discovery/selection (combines with Open Graph/Twitter cards above)
 * Supports adding microformats to the page's \<head> section _[Note 7](#note-7)_
@@ -54,6 +54,8 @@ Basic documentation for metadata-mod-hugo-dfd, a Hugo module by [Daniel F. Dicki
   * [Twitter Cards](https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/abouts-cards)
   * [Schema (Website)](https://schema.org/)
   * [Facebook Admin ID for Domain Insights](https://www.facebook.com/insights/)
+* Improved RSS feed
+* Improved Sitemap (XML)
 
 ## Basic usage
 
@@ -106,7 +108,7 @@ override site-wide params.
 | microformatsTwitterCardEnable | _true_ | If true add `twitter_cards.html` microformat to `<head>` _[Note 15](#note-15)_ |
 | multipleH1ErrorIgnore | _true_ | If false and there would be multiple `<h1>` elements on a page, error the build _[Note 19](#note-19)_ |
 | multipleH1ErrorFix | _false_ | If true and there would be multiple `<h1>` elements on a page, make all but the first an `<h2>` _[Note 19](#note-19)_ |
-| multipleH1ErrorWarn | _true_ | If true and there would be multiple `<h1>` elements on a page,  _[Note 19](#note-19)_ |
+| multipleH1ErrorWarn | _true_ | If true and there would be multiple `<h1>` elements on a page, issue a warning. _[Note 19](#note-19)_ |
 | openGraphType | _(nil)_ | If set overrides the default type used for Open Graph microformat `og:type` meta tag _[Note 16](#note-16)_ |
 | pageCanonical | _true_ | Page-level params only. When false omits this page from the `sitemap.xml`, if applicable |
 | rssIncludeMainArticle | _false_ | When true include the pages `.Content` (that is the rendered content from the page's file such as `/content/posts/a-post.md`) directly in the RSS feed instead of only a summary or description |
@@ -128,6 +130,8 @@ An example generation of `<head>` using these helpers can be found in the exampl
 ### A note on CSS generation
 
 It is expected that `layouts/partial/helpers/head/resources-pipes.html` will not be used by consumers of this module, and that instead handling for the CSS, scripts and so on will use code more suitable for the consumer's production and/or development situation.
+
+That is, it is expected the module consumer will use their own version of `resources-pipes.html` that overrides the one from this module.
 
 ### A note on metadata generation
 
@@ -188,7 +192,7 @@ From frontmatter
 
 ### Note 2
 
-See [DFDs Hugo image handling module](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd)
+See [DFDs Hugo metadata image module](https://github.com/danielfdickinson/meta-image-mod-hugo-dfd)
 
 ### Note 3
 
